@@ -34,8 +34,7 @@ knitr::opts_chunk$set(fig.height = 4, message = FALSE, warning = FALSE)
 
 ## Introduction
 
-* Describe PaLD (Ken & Kate?)
-* Cite PaLD 
+* Describe PaLD (Ken & Kate?) [@berenhaut2022social]
 
 We present a new package, \CRANpkg{pald}, for calculating partitioned local depth (PaLD) probabilities, implementing clustering analyses, and creating data visualizations to represent the clusters. This paper will describe how to use the package as well as walk through two examples.
 
@@ -43,160 +42,149 @@ We present a new package, \CRANpkg{pald}, for calculating partitioned local dept
 
 The main functions in \CRANpkg{pald} package can be split into 3 categories:
 
-1. Helper functions to organize data into the correct format, into distance matrices and then contribution matrices
-2. Functions that convert a contribution matrix into a variety of useful formats, including partitioned local depths, clusters, and graphs
+1. Helper functions to organize data into the correct format, into distance matrices and then cohesion matrices
+2. Functions that convert a cohesion matrix into a variety of useful formats, including partitioned local depths, clusters, and graphs
 3. Plotting functions
 
 In addition, the package provides a number of pertinent example data sets commonly used to demonstrate cluster algorithms, including a synthetic data set of two-dimensional points created by \citet{gionis1clustering} to demonstrate clustering aggregation, a sample of walking distances from a pump in the infamous cholera outbreak \citep{cholera}, clustering data generated from the scikit-learn Python package \citep{pedregosa2011scikit}, and data compiled by \cite{tissue} of tissue gene expressions. 
 
+While it is not a necessity, the \CRANpkg{pald} package is designed to function well with the pipe operator, `|>`. This functionality will be demonstrated below.
 
-While it is not a necessity, the \CRANpkg{pald} package is designed to function well with the pipe operator, `%>%`, from the \citet{magrittr} \CRANpkg{magrittr} package in that the first argument of each function is the data. This functionality will be demonstrated below.
 
 ### Helper functions to create contribution matrix
 
-For demonstration purposes, below is a sample data frame with two variables, `x1` and `x2`. The methods put forth here work on data frames with higher dimensions, as described in the **Examples** section, we are simply choosing a small data frame here for demonstration purposes.
+For demonstration purposes, below is a sample data frame with two variables, `x1` and `x2`. The methods put forth here work on data frames with higher dimensions, as described in the **Examples** section; we are simply choosing a small data frame here for demonstration purposes.
 
 ```{r}
 library(pald)
-d <- data.frame(
+df <- data.frame(
   x1 = c(6, 8, 11, 16, 4),
   x2 = c(5, 4, 13, 7, 18)
 )
-rownames(d) <- c("A", "B", "C", "D", "E")
+rownames(df) <- c("A", "B", "C", "D", "E")
 ```
 
-The first step needed to calculate the partitioned local depths is to construct a _distance matrix_. If the data are already in this form, the user can skip to the next step. The `get_distance_matrix()` function converts an input data frame into a distance matrix, as demonstrated below.
+The first step needed to calculate the partitioned local depths is to construct a _distance matrix_. If the data are already in this form, the user can skip to the next step. The `dist()` function converts an input data frame into a distance matrix, as demonstrated below.
 
 ```{r}
-get_distance_matrix(d)
-```
-This will create an $n\times n$ distance matrix, where $n$ corresponds to the number of observations in the original data frame, in this example $n = 5$. By default, the distance matrix is _scaled_, is possible to create a distance matrix that is not scaled by changing the `scale` argument to `FALSE`.
-
-```{r}
-get_distance_matrix(d, scale = FALSE)
-```
- 
- As mentioned previously, the functions in this package are designed to work with the \CRANpkg{magrittr} pipe operator, `%>%`, so the same code as above could be written utilizing this format.
- 
-```{r}
-d %>%
-  get_distance_matrix()
+d <- dist(df)
 ```
 
-This distance matrix can then be passed to the `get_contribution_matrix()` function in order to calculate a matrix of contributions. Again, if the user begins with a distance matrix, they can skip the first step and simple input the contribution matrix into this function.
+This will create an $n\times n$ distance matrix, where $n$ corresponds to the number of observations in the original data frame, in this example $n = 5$. 
+<!-- TODO: is this nxn? looks like (n-1)x(n-1) -->
+This distance matrix can then be passed to the `cohesion_matrix()` function in order to calculate the pairwise cohesion values. Cohesion is an interpretable probability that reflects the strength of alignment of two points. Again, if the user begins with a distance matrix, they can skip the first step and simply input the distance matrix into this function.
 
 ```{r}
-distance_matrix <- get_distance_matrix(d)
-get_contribution_matrix(distance_matrix)
+d <- dist(df)
+cohesion_matrix(d)
 ```
 
-Again, the \CRANpkg{magrittr} pipe can be used as follows.
+Equivalently, the user can use the native pipe `|>` as follows.
 
 ```{r}
-d %>%
-  get_distance_matrix() %>%
-  get_contribution_matrix()
+df |>
+  dist() |>
+  cohesion_matrix()
 ```
 
-The _contribution matrix_ output by the `get_contribution_matrix()` is the main input for the majority of the remaining functions.
+The _cohesion matrix_ output by the `cohesion_matrix()` is the main input for the majority of the remaining functions.
 
-### Functions that convert a contribution matrix into useful formats
+### Functions that convert a cohesion matrix into useful formats
 
-From the _contribution matrix_, a variety of useful quantities can be calculated. Below, we create a contribution matrix using the functions described in the previous section.
+From the _cohesion matrix_, a variety of useful quantities can be calculated. Below, we create a cohesion matrix using the functions described in the previous section.
 
 ```{r}
-d %>%
-  get_distance_matrix() %>%
-  get_contribution_matrix() -> contribution_matrix
+d |>
+  dist() |>
+  cohesion_matrix() -> cohesion
 ```
 
-To calculate the _clusters_ that each point will fall into, we can use the `get_clusters()` function. This will output a data frame with two columns, the first will correspond to the `point`, as identified by the row name of the original input data frame, `d`, the second will identify the `cluster` that each point belongs to.
+To calculate the _clusters_ that each point will fall into, we can use the `community_clusters()` function. This will output a data frame with two columns, the first will correspond to the `point`, as identified by the row name of the original input data frame, `df`, the second will identify the `cluster` that each point belongs to.
 
 ```{r}
-get_clusters(contribution_matrix)
+community_clusters(cohesion)
 ```
 
 In this example, three clusters are identified with these five points. Points `A` and `B` fall into cluster 1. Points `C` and `D` into cluster 2, and point `E` in cluster 3.
 
-The `get_depths()` function calculates the _depths_ of each point, outputting a data frame with two columns, `point` indicating the point, as identified by the row name of the original data frame, `d`, and `depth` indicating the depth of the point. The data frame is arranged by depth, with the deepest point listed first.  
+The `local_depths()` function calculates the _depths_ of each point, outputting a vector of local depths. Local depth is an interpretable probability which reflects aspects of relative position and centrality via distance comparisons (i.e., $d(z, x) < d(z, y)$).
 
 ```{r}
-get_depths(contribution_matrix)
+local_depths(cohesion)
 ```
 
 In this case, the deepest point is `C`. 
 
-The `get_bound()` function will calculate the _bound_ of the contribution matrix.
+The `strong_threshold()` function will calculate the cohesion threshold for strong ties. This is equal to half the average of the diagonal cohesion matrix. This is a threshold that may be used to distinguish between strong and weak ties.
 
 ```{r}
-get_bound(contribution_matrix)
+strong_threshold(cohesion)
 ```
 
-In this case, the bound is 0.14.
+In this case, the threshold is `0.14`.
 
 The `any_isolated()` function will check whether there are any isolated points that will inadvertently be dropped by a graph.
 
 ```{r}
-any_isolated(contribution_matrix)
+any_isolated(cohesion)
 ```
 
-In this case, there are no isolated points.
+Here, there are no isolated points.
 
-The `get_pald_cluster_matrix()` will calculate a matrix of partitioned local depth clusters. This function contains an argument `keep_all_edges` that indicates whether all edges should be kept. The default value is `FALSE`, indicating that edges that are less than the expectation will be dropped, allowing a clear clustering of points. Changing this argument to `TRUE` results in the pairwise minimum of the contribution matrix and the transpose of the contribution matrix.
+The function `cohesion_strong()` will update the cohesion matrix to set all weak ties to zero (via the `strong_threshold()` function). Optionally, the matrix will also be symmetrized, with the default parameter `symmetric = TRUE`.
 
 ```{r}
-get_pald_cluster_matrix(contribution_matrix, keep_all_edges = TRUE)
+cohesion_strong(cohesion)
 ```
 
-Leaving the `keep_all_edges` as the default, `FALSE` will take this pairwise minimum seen above and drop the edges that are less than the expectation.
+Finally, the `community_graphs()` function takes the cohesion matrix and creates \CRANpkg{igraph} objects, graphs that describes the relationship between the points. This function will output a list of three objects:
+
+* `G`: the weighted (community) graph whose edge weights are mutual cohesion
+* `G_strong`: the weighted (community) graph consisting of edges for which mutual cohesion is greater than the threshold for strong ties
+* `layout`: the graph layout, using the Fruchterman Reingold (FR) force-directed graph drawing for the graph `G`
 
 ```{r}
-get_pald_cluster_matrix(contribution_matrix)
-```
-
-Finally, the `get_pald_graph()` function takes the contribution matrix and creates an \CRANpkg{igraph} object, a graph that describes the relationship between the points.
-
-```{r}
-get_pald_graph(contribution_matrix)
+graphs <- community_graphs(cohesion)
+graphs[["G_strong"]]
 ```
 
 Here we see that there are two connected components, points `A` and `B`, which form the first cluster, and points `D` and `C` which form the second.
 
 ## Plotting functions
 
-The final category of function is functions for data visualization. We can begin by visualizing the points in data frame `d` (Figure \ref{fig:fig1}). 
+The final category of function is functions for data visualization. We can begin by visualizing the points in data frame `df` (Figure \ref{fig:fig1}). 
 
-```{r fig1, fig.cap = "Visualize the points from data frame `d`", message = FALSE, warning = FALSE}
+```{r fig1, fig.cap = "Visualize the points from data frame `df`", message = FALSE, warning = FALSE}
 library(ggplot2)
-ggplot(d, aes(x1, x2)) +
-  geom_text(label = rownames(d))
+ggplot(df, aes(x1, x2)) +
+  geom_text(label = rownames(df))
 ```
 
-We can then pass the contribution matrix to the `plot_pald_graph()` function to view the relationship between points (Figure \ref{fig:fig2}). By default, this will invoke the `layout_nicely()` function from \CRANpkg{igraph} to determine the layout of the graph.
+We can then pass the cohesion matrix to the `plot_community_graphs()` function to view the relationship between points (Figure \ref{fig:fig2}).
 
-```{r fig2, fig.cap = "PaLD graph displaying the relationship between the points in data frame `d`"}
-d %>%
-  get_distance_matrix() %>%
-  get_contribution_matrix() %>%
-  plot_pald_graph()
+```{r fig2, fig.cap = "PaLD graph displaying the relationship between the points in data frame `df`"}
+df |>
+  dist() |>
+  cohesion_matrix() |>
+  plot_community_graphs()
 ```
 
-The `layout` argument allows the user to pass a matrix to dictate the layout of the graph. For example, if we wanted the graph to match the visualization displayed in Figure \ref{fig:fig1}, we can pass `as.matrix(d)`, or a matrix of the data frame `d` to the `layout` argument  (Figure \ref{fig:fig3}.  
+The `layout` argument allows the user to pass a matrix to dictate the layout of the graph. For example, if we wanted the graph to match the visualization displayed in Figure \ref{fig:fig1}, we can pass `as.matrix(df)`, or a matrix of the data frame `df` to the `layout` argument  (Figure \ref{fig:fig3}.  
 ```{r fig3, fig.cap = "PaLD graph displaying the relationship between the points in data frame `d`, matching the original layout in Figure 1"}
-d %>%
-  get_distance_matrix() %>%
-  get_contribution_matrix() %>%
-  plot_pald_graph(layout = as.matrix(d))
+df |>
+  dist() |>
+  cohesion_matrix() |>
+  plot_community_graphs(layout = as.matrix(df))
 ```
 
-This `plot_pald_graph()` function will also permit parameters that can be passed to the `plot.igraph()` function. For example, to add axes to the graph, the user can pass the `axes = TRUE` argument to the `...` in the `plot_pald_graph()` function (Figure \ref{fig:fig4}).
+This `plot_community_graphs()` function will also permit parameters that can be passed to the `plot.igraph()` function. For example, to add axes to the graph, the user can pass the `axes = TRUE` argument to the `...` in the `plot_community_graphs()` function (Figure \ref{fig:fig4}).
 
 ```{r fig4, fig.cap = "PaLD graph displaying the relationship between the points in data frame `d`, matching the original layout in Figure 1, adding axes"}
-d %>%
-  get_distance_matrix() %>%
-  get_contribution_matrix() %>%
-  plot_pald_graph(layout = as.matrix(d),
-                  axes = TRUE)
+df |>
+  dist() |>
+  cohesion_matrix() |>
+  plot_community_graphs(layout = as.matrix(df),
+                        axes = TRUE)
 ```
 
 ## Examples
@@ -205,29 +193,27 @@ We will demonstrate the utility of the \CRANpkg{pald} package in two clustering 
 
 ### Clustering tissue gene expression data
 
-The first example data frame is a subset of tissue gene expression data from \citet{zilliox2007gene}, \citet{mccall2011gene}, and \citet{mccall2014gene}, obtained from the **tissuesGeneExpression** bioconductor package \citep{tissue}. This data set is included in the \CRANpkg{pald} package in an object called `tissue`.
+The first example if from a subset of tissue gene expression data from \citet{zilliox2007gene}, \citet{mccall2011gene}, and \citet{mccall2014gene}, obtained from the **tissuesGeneExpression** bioconductor package \citep{tissue}. A cohesion matrix was created using this data set and is included the \CRANpkg{pald} package in an object called `tissue_cohesion_matrix`.
 
-The `tissue` object is a matrix with 189 rows, each with a corresponding tissue, such as `colon`, `kidney` or `cerebellum`. There are 22,215 columns corresponding to gene expression data from each of these rows.
+The `tissue_cohesion_matrix` object is a cohesion matrix with 189 rows and 189 columns.
 
-We will first calculate the contribution matrix for this data frame.
+We can use this contribution matrix to display the relationship between tissue samples using the `plot_community_graphs()` function (Figure \ref{fig:fig5}). For clarity of the display, we show how to only include a random set of the vertex labels. We can pass this random set through the `...` to the `plot.igraph` `vertex.label` parameter. 
 
-```{r}
-tissue_contribution_matrix <- tissue %>%
-  get_distance_matrix(scale = FALSE) %>%
-  get_contribution_matrix()
+```{r fig5, fig.cap = "PaLD clustering of tissue data", fig.height = 9, fig.width = 7}
+set.seed(1)
+
+labels <- rownames(tissue_cohesion_matrix)
+labels[sample(1:189, 125)] <- ""
+plot_community_graphs(tissue_cohesion_matrix,
+                      vertex.label = labels,
+                      vertex.size = 4)
 ```
 
-We can then use this contribution matrix to display the relationship between tissue samples using the `plot_pald_graph()` function (Figure \ref{fig:fig5}).
-
-```{r fig5, fig.cap = "PaLD clustering of tissue data"}
-plot_pald_graph(tissue_contribution_matrix)
-```
-
-The `get_clusters()` function can be used to identify the clusters of each tissue sample. Since the output is a data frame, we can summarize the clusters using commonly used data analysis techniques. For demonstration purposes, we will use the \CRANpkg{dplyr} package to summarize the contribution of clusters.
+The `community_clusters()` function can be used to identify the clusters of each tissue sample. Since the output is a data frame, we can summarize the clusters using commonly used data analysis techniques. For demonstration purposes, we will use the \CRANpkg{dplyr} package to summarize the contribution of clusters.
 
 ```{r}
 library(dplyr)
-get_clusters(tissue_contribution_matrix) %>%
+community_clusters(tissue_cohesion_matrix) %>%
   group_by(cluster, point) %>%
   count()
 ```
@@ -236,51 +222,28 @@ From this, we can glean that cluster one consists of two types of tissue, the ki
 
 ### Clustering generated data
 
-The \CRANpkg{pald} includes two data frames generated from the scikit-learn Python package \citep{pedregosa2011scikit}, `noisy_moons` and `noisy_circles`. 
+The \CRANpkg{pald} includes three randomly generated data frames corresponding to plots from @berenhaut2022social: 
 
-The `noisy_moons` data frame consists of 500 rows and two columns. 
+* `exdata1` is a data set consisting of 8 points to recreate Figure 1 in @berenhaut2022social 
+* `exdata2` is a data set consisting of 16 points to recreate Figure 2 in @berenhaut2022social 
+* `exdata3` is a data set consisting of 240 points to recreate Figure 4D in @berenhaut2022social 
 
-```{r}
-moons_contribution_matrix <- noisy_moons %>%
-  get_distance_matrix() %>%
-  get_contribution_matrix()
-```
-
-When plotting the `noisy_moons` PaLD graph, we want the layout to match the layout of the original data, so we will pass `as.matrix(noisy_moons)` to the `layout` parameter in the `plot_pald_graph()` function. Additionally, here the row names are meaningless, they just correspond to the location of the generated data, so we can remove the labels on the plot by passing `vertex.label = NA` to the `...` of the `plot_pald_graph()` function.
-
-```{r, eval = FALSE}
-plot_pald_graph(moons_contribution_matrix,
-                layout = as.matrix(noisy_moons),
-                vertex.label = NA)
-```
-
-
-The `noisy_circles` data frame consists of 500 rows and two columns. We can create the contribution matrix for this data frame using the same methods as used for the `noisy_moons` data.
+Here, we will demonstrate how to use `exdata3`. These points were generated from bivariate normal distributions with varying means and variances.
 
 ```{r}
-circles_contribution_matrix <- noisy_circles %>%
-  get_distance_matrix() %>%
-  get_contribution_matrix()
+exdata_cohesion_matrix <- exdata3 |>
+  dist() |>
+  cohesion_matrix()
 ```
 
-Similarly, we will pass the layout and remove vertex labels for the noisy circles PaLD plot.
+When plotting the `exdata3` PaLD graph, we want the layout to match the layout of the original data, so we will pass `as.matrix(exdata3)` to the `layout` parameter in the `plot_community_graphs()` function. Additionally, here the row names are meaningless, they just correspond to the location of the generated data, so we can remove the labels on the plot by setting `show_labels = FALSE`. The `only_strong` parameter will only display the strongly connected edges. Additionally, we can optionally pass parameters through the `...` to `plot::igraph` function; for example, to increase the vertex size we can set `vertex.size = 5`. Figure \ref{fig:fig6} shows this.
 
-```{r, eval = FALSE}
-plot_pald_graph(circles_contribution_matrix,
-                layout = as.matrix(noisy_circles),
-                vertex.label = NA)
-```
-
-Because these are \CRANpkg{igraph} objects, they can be combined as you would normally combine a plot. For example, we could add the line `par(mfrow = c(1, 2))` above the plot calls to create an output where both plots are displayed side by side (Figure \ref{fig:fig6}).
-
-```{r fig6, fig.cap = "PaLD clustering of noisy moons (left) and noisy circles (right) data"}
-par(mfrow = c(1, 2))
-plot_pald_graph(moons_contribution_matrix,
-                layout = as.matrix(noisy_moons),
-                vertex.label = NA)
-plot_pald_graph(circles_contribution_matrix,
-                layout = as.matrix(noisy_circles),
-                vertex.label = NA)
+```{r fig6, fig.cap = "PaLD clustering of randomly generated example data (from Figure 4D from Berenhaut et al. (2022))"}
+plot_community_graphs(exdata_cohesion_matrix,
+                layout = as.matrix(exdata3),
+                show_labels = FALSE, 
+                only_strong = TRUE,
+                vertex.size = 5)
 ```
 
 The ability of the PaLD algorithm to discern clusters is demonstrated here.
