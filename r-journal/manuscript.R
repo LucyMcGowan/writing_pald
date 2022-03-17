@@ -8,10 +8,10 @@ knitr::opts_chunk$set(fig.height = 4, message = FALSE, warning = FALSE)
 ## -----------------------------------------------------------------------------
 library(pald)
 df <- data.frame(
-  x1 = c(6, 8, 11, 16, 4),
-  x2 = c(5, 4, 13, 7, 18)
+  x1 = c(6, 8, 11, 16, 4, 14),
+  x2 = c(5, 4, 13, 7, 6, 10)
 )
-rownames(df) <- c("A", "B", "C", "D", "E")
+rownames(df) <- c("A", "B", "C", "D", "E", "F")
 
 
 ## -----------------------------------------------------------------------------
@@ -30,7 +30,7 @@ df |>
 
 
 ## -----------------------------------------------------------------------------
-d |>
+df |>
   dist() |>
   cohesion_matrix() -> cohesion
 
@@ -63,58 +63,125 @@ graphs[["G_strong"]]
 ## ----fig1, fig.cap = "Visualize the points from data frame `df`", message = FALSE, warning = FALSE----
 library(ggplot2)
 ggplot(df, aes(x1, x2)) +
-  geom_text(label = rownames(df))
+  geom_text(label = rownames(df)) + 
+  theme(aspect.ratio = 1)
 
 
 ## ----fig2, fig.cap = "PaLD graph displaying the relationship between the points in data frame `df`"----
-df |>
-  dist() |>
-  cohesion_matrix() |>
-  plot_community_graphs()
+plot_community_graphs(cohesion)
 
 
 ## ----fig3, fig.cap = "PaLD graph displaying the relationship between the points in data frame `d`, matching the original layout in Figure 1"----
-df |>
-  dist() |>
-  cohesion_matrix() |>
-  plot_community_graphs(layout = as.matrix(df))
+par(pty = "s")
+
+plot_community_graphs(cohesion, 
+                      layout = as.matrix(df),
+                      vertex.size = 15,
+                      vertex.label.color = "white")
 
 
-## ----fig4, fig.cap = "PaLD graph displaying the relationship between the points in data frame `d`, matching the original layout in Figure 1, adding axes"----
-df |>
-  dist() |>
-  cohesion_matrix() |>
-  plot_community_graphs(layout = as.matrix(df),
-                        axes = TRUE)
+## -----------------------------------------------------------------------------
+tissue_cohesion <- cohesion_matrix(tissue_dist)
 
 
-## ----fig5, fig.cap = "PaLD clustering of tissue data", fig.height = 9, fig.width = 7----
+## -----------------------------------------------------------------------------
+community_clusters(tissue_cohesion) |>
+  dplyr::count(cluster, point)
+
+
+## ---- eval = FALSE------------------------------------------------------------
+#> labels <- rownames(tissue_cohesion)
+#> plot_community_graphs(tissue_cohesion,
+#>                       show_labels = FALSE,
+#>                       vertex.size = 4,
+#>                       vertex.color = as.factor(labels),
+#>                       edge_width_factor = 35,
+#>                       emph_strong = 5)
+#> legend("topleft",
+#>        legend = unique(as.factor(labels)),
+#>        pt.bg = unique(as.factor(labels)),
+#>        col = "black",
+#>        pch = 21)
+
+
+## ---- include = FALSE, output = "hide"----------------------------------------
 set.seed(1)
+tissue_cohesion <- cohesion_matrix(tissue_dist)
+labels <- rownames(tissue_cohesion)
+png("fig5.png", res = 300, height = 3000, width = 3000)
+plot_community_graphs(tissue_cohesion,
+                      show_labels = FALSE,
+                      vertex.size = 4,
+                      vertex.color = as.factor(labels),
+                      edge_width_factor = 35,
+                      emph_strong = 5) 
+legend("topright", 
+       legend = unique(as.factor(labels)), 
+       pt.bg = unique(as.factor(labels)),
+       col = "black",
+       pch = 21)
+dev.off()
 
-labels <- rownames(tissue_cohesion_matrix)
-labels[sample(1:189, 125)] <- ""
-plot_community_graphs(tissue_cohesion_matrix,
-                      vertex.label = labels,
-                      vertex.size = 4)
+
+## ----fig4, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "PaLD clustering of tissue data. The line colors indicate the PaLD clusters, the point colors indicate the tissue classification.", out.width = "100%"----
+knitr::include_graphics("fig5.png")
 
 
 ## -----------------------------------------------------------------------------
-library(dplyr)
-community_clusters(tissue_cohesion_matrix) %>%
-  group_by(cluster, point) %>%
-  count()
+cognate_cohesion <- cohesion_matrix(cognate_dist)
+cognate_graphs <- community_graphs(cognate_cohesion)
+
+cognate_graph_strong <- cognate_graphs[["G_strong"]]
 
 
 ## -----------------------------------------------------------------------------
-exdata_cohesion_matrix <- exdata3 |>
+french_neighbors <- igraph::neighbors(cognate_graph_strong, "French")
+french_neighbors
+
+
+## -----------------------------------------------------------------------------
+cognate_cohesion["French", french_neighbors]
+
+
+## -----------------------------------------------------------------------------
+exdata_cohesion <- exdata3 |>
   dist() |>
   cohesion_matrix()
 
+exdata_pald <- community_clusters(exdata_cohesion)$cluster
 
-## ----fig6, fig.cap = "PaLD clustering of randomly generated example data (from Figure 4D from Berenhaut et al. (2022))"----
-plot_community_graphs(exdata_cohesion_matrix,
-                layout = as.matrix(exdata3),
-                show_labels = FALSE, 
-                only_strong = TRUE,
-                vertex.size = 5)
+exdata_kmeans <- kmeans(exdata3, 8)$cluster
+
+exdata_hclust <- exdata3 |>
+  dist() |>
+  hclust() |>
+  cutree(k = 8) 
+
+
+## ----fig5, fig.cap = "PaLD clustering of randomly generated example data (from Figure 4D from Berenhaut et al. (2022)) compared to *k*-means and hierarchical clustering with k = 8."----
+par(mfrow = c(1, 3), pty = "s")
+plot(
+  exdata3,
+  pch = 16,
+  col = pald_colors[exdata_pald],
+  xlab = "",
+  ylab = "",
+  main = "PaLD Clusters"
+)
+plot(
+  exdata3,
+  pch = 16,
+  col = pald_colors[exdata_kmeans],
+  xlab = "",
+  ylab = "",
+  main = "K-Means Clusters (k = 8)"
+)
+plot(
+  exdata3,
+  pch = 16,
+  col = pald_colors[exdata_hclust],
+  xlab = "",
+  ylab = "",
+  main = "Hiearchical Clusters (k = 8)"
+)
 

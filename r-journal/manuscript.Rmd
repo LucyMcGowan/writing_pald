@@ -46,22 +46,22 @@ The main functions in \CRANpkg{pald} package can be split into 3 categories:
 2. Functions that convert a cohesion matrix into a variety of useful formats, including partitioned local depths, clusters, and graphs
 3. Plotting functions
 
-In addition, the package provides a number of pertinent example data sets commonly used to demonstrate cluster algorithms, including a synthetic data set of two-dimensional points created by \citet{gionis1clustering} to demonstrate clustering aggregation, a sample of walking distances from a pump in the infamous cholera outbreak \citep{cholera}, clustering data generated from the scikit-learn Python package \citep{pedregosa2011scikit}, and data compiled by \cite{tissue} of tissue gene expressions. 
+In addition, the package provides a number of pertinent example data sets commonly used to demonstrate cluster algorithms, including a synthetic data set of two-dimensional points created by \citet{gionis1clustering} to demonstrate clustering aggregation, clustering data generated from the scikit-learn Python package \citep{pedregosa2011scikit}, data describing cognate relationships between words across 87 Indo-European languages \citep{dyen92}, data compiled by \cite{tissue} of tissue gene expressions, and three example data sets generated for the \citet{berenhaut2022social} paper. 
 
 While it is not a necessity, the \CRANpkg{pald} package is designed to function well with the pipe operator, `|>`. This functionality will be demonstrated below.
 
 
-### Helper functions to create contribution matrix
+### Creating the cohesion matrix
 
 For demonstration purposes, below is a sample data frame with two variables, `x1` and `x2`. The methods put forth here work on data frames with higher dimensions, as described in the **Examples** section; we are simply choosing a small data frame here for demonstration purposes.
 
 ```{r}
 library(pald)
 df <- data.frame(
-  x1 = c(6, 8, 11, 16, 4),
-  x2 = c(5, 4, 13, 7, 18)
+  x1 = c(6, 8, 11, 16, 4, 14),
+  x2 = c(5, 4, 13, 7, 6, 10)
 )
-rownames(df) <- c("A", "B", "C", "D", "E")
+rownames(df) <- c("A", "B", "C", "D", "E", "F")
 ```
 
 The first step needed to calculate the partitioned local depths is to construct a _distance matrix_. If the data are already in this form, the user can skip to the next step. The `dist()` function converts an input data frame into a distance matrix, as demonstrated below.
@@ -70,9 +70,9 @@ The first step needed to calculate the partitioned local depths is to construct 
 d <- dist(df)
 ```
 
-This will create an $n\times n$ distance matrix, where $n$ corresponds to the number of observations in the original data frame, in this example $n = 5$. 
-<!-- TODO: is this nxn? looks like (n-1)x(n-1) -->
-This distance matrix can then be passed to the `cohesion_matrix()` function in order to calculate the pairwise cohesion values. Cohesion is an interpretable probability that reflects the strength of alignment of two points. Again, if the user begins with a distance matrix, they can skip the first step and simply input the distance matrix into this function.
+This will create a `dist` object. If converted to a matrix, this will be a $n\times n$ distance matrix, where $n$ corresponds to the number of observations in the original data frame, in this example $n = 6$. 
+
+This dist object, or equivalently a distance matrix, can then be passed to the `cohesion_matrix()` function in order to calculate the pairwise cohesion values. Cohesion is an interpretable probability that reflects the strength of alignment of two points. Again, if the user begins with a distance matrix, they can skip the first step and simply input the distance matrix into this function.
 
 ```{r}
 d <- dist(df)
@@ -94,7 +94,7 @@ The _cohesion matrix_ output by the `cohesion_matrix()` is the main input for th
 From the _cohesion matrix_, a variety of useful quantities can be calculated. Below, we create a cohesion matrix using the functions described in the previous section.
 
 ```{r}
-d |>
+df |>
   dist() |>
   cohesion_matrix() -> cohesion
 ```
@@ -105,7 +105,7 @@ To calculate the _clusters_ that each point will fall into, we can use the `comm
 community_clusters(cohesion)
 ```
 
-In this example, three clusters are identified with these five points. Points `A` and `B` fall into cluster 1. Points `C` and `D` into cluster 2, and point `E` in cluster 3.
+In this example, three clusters are identified with these six points. Points `A`, `B`, and `E` fall into cluster 1. Point `C` is in cluster 2 and points `D` and `F` fall into cluster 3.
 
 The `local_depths()` function calculates the _depths_ of each point, outputting a vector of local depths. Local depth is an interpretable probability which reflects aspects of relative position and centrality via distance comparisons (i.e., $d(z, x) < d(z, y)$).
 
@@ -113,7 +113,7 @@ The `local_depths()` function calculates the _depths_ of each point, outputting 
 local_depths(cohesion)
 ```
 
-In this case, the deepest point is `C`. 
+In this case, the deepest point is `A`. 
 
 The `strong_threshold()` function will calculate the cohesion threshold for strong ties. This is equal to half the average of the diagonal cohesion matrix. This is a threshold that may be used to distinguish between strong and weak ties.
 
@@ -121,7 +121,7 @@ The `strong_threshold()` function will calculate the cohesion threshold for stro
 strong_threshold(cohesion)
 ```
 
-In this case, the threshold is `0.14`.
+In this case, the threshold is `0.12`.
 
 The `any_isolated()` function will check whether there are any isolated points that will inadvertently be dropped by a graph.
 
@@ -148,77 +148,129 @@ graphs <- community_graphs(cohesion)
 graphs[["G_strong"]]
 ```
 
-Here we see that there are two connected components, points `A` and `B`, which form the first cluster, and points `D` and `C` which form the second.
+Here we see that there are three connected components, points `A` and `B`, and `A` and `E` which form the first cluster, and points `D` and `F` which form another.
 
 ## Plotting functions
 
-The final category of function is functions for data visualization. We can begin by visualizing the points in data frame `df` (Figure \ref{fig:fig1}). 
+The final category of function is functions for data visualization. We can begin by visualizing the points in data frame `df` (Figure \ref{fig:fig1}). When visualizing these points, it is important to have a square plot so as to not distort the distances. When using the \CRANpkg{ggplot2} package for this visualization, you can use the `aspect.ratio  = 1` argument in the `theme()` function. If using the `plot()` function included in the base library, you can set the plot area to be a square by using `par(pty = "s")` prior to calling the `plot()` function, as shown below.
+
 
 ```{r fig1, fig.cap = "Visualize the points from data frame `df`", message = FALSE, warning = FALSE}
 library(ggplot2)
 ggplot(df, aes(x1, x2)) +
-  geom_text(label = rownames(df))
+  geom_text(label = rownames(df)) + 
+  theme(aspect.ratio = 1)
 ```
 
-We can then pass the cohesion matrix to the `plot_community_graphs()` function to view the relationship between points (Figure \ref{fig:fig2}).
+We can pass the cohesion matrix to the `plot_community_graphs()` function to view the relationship between points (Figure \ref{fig:fig2}).
 
 ```{r fig2, fig.cap = "PaLD graph displaying the relationship between the points in data frame `df`"}
-df |>
-  dist() |>
-  cohesion_matrix() |>
-  plot_community_graphs()
+plot_community_graphs(cohesion)
 ```
 
-The `layout` argument allows the user to pass a matrix to dictate the layout of the graph. For example, if we wanted the graph to match the visualization displayed in Figure \ref{fig:fig1}, we can pass `as.matrix(df)`, or a matrix of the data frame `df` to the `layout` argument  (Figure \ref{fig:fig3}.  
+The `layout` argument allows the user to pass a matrix to dictate the layout of the graph. For example, if we wanted the graph to match the visualization displayed in Figure \ref{fig:fig1}, we can pass `as.matrix(df)`, or a matrix of the data frame `df` to the `layout` argument  (Figure \ref{fig:fig3}.  Notice in the code below, we set `par(pty = "s")` in order to ensure that we have a square plotting region. Additionally, this `plot_community_graphs()` function will also permit parameters that can be passed to the `plot.igraph()` function. For example, we can pass arguments to the `plot.igraph` function via the `...`, for example to increase the vertex size and change the vertex label color, we can specify `vertex.size = 15` and `vertex.label.color = "white"`.
+
 ```{r fig3, fig.cap = "PaLD graph displaying the relationship between the points in data frame `d`, matching the original layout in Figure 1"}
-df |>
-  dist() |>
-  cohesion_matrix() |>
-  plot_community_graphs(layout = as.matrix(df))
-```
+par(pty = "s")
 
-This `plot_community_graphs()` function will also permit parameters that can be passed to the `plot.igraph()` function. For example, to add axes to the graph, the user can pass the `axes = TRUE` argument to the `...` in the `plot_community_graphs()` function (Figure \ref{fig:fig4}).
-
-```{r fig4, fig.cap = "PaLD graph displaying the relationship between the points in data frame `d`, matching the original layout in Figure 1, adding axes"}
-df |>
-  dist() |>
-  cohesion_matrix() |>
-  plot_community_graphs(layout = as.matrix(df),
-                        axes = TRUE)
+plot_community_graphs(cohesion, 
+                      layout = as.matrix(df),
+                      vertex.size = 15,
+                      vertex.label.color = "white")
 ```
 
 ## Examples
 
-We will demonstrate the utility of the \CRANpkg{pald} package in two clustering examples.
+We will demonstrate the utility of the \CRANpkg{pald} package in three clustering examples.
 
 ### Clustering tissue gene expression data
 
-The first example if from a subset of tissue gene expression data from \citet{zilliox2007gene}, \citet{mccall2011gene}, and \citet{mccall2014gene}, obtained from the **tissuesGeneExpression** bioconductor package \citep{tissue}. A cohesion matrix was created using this data set and is included the \CRANpkg{pald} package in an object called `tissue_cohesion_matrix`.
+The first example if from a subset of tissue gene expression data from \citet{zilliox2007gene}, \citet{mccall2011gene}, and \citet{mccall2014gene}, obtained from the **tissuesGeneExpression** bioconductor package \citep{tissue}. A `dist` object was created using this data set and is included the \CRANpkg{pald} package in an object called `tissue_dist`.
 
-The `tissue_cohesion_matrix` object is a cohesion matrix with 189 rows and 189 columns.
+The `tissue_dist` object is a `dist` object resulting in a distance matrix with 189 rows and 189 columns.
 
-We can use this contribution matrix to display the relationship between tissue samples using the `plot_community_graphs()` function (Figure \ref{fig:fig5}). For clarity of the display, we show how to only include a random set of the vertex labels. We can pass this random set through the `...` to the `plot.igraph` `vertex.label` parameter. 
+We can create the cohesion matrix using the `cohesion_matrix` function.
 
-```{r fig5, fig.cap = "PaLD clustering of tissue data", fig.height = 9, fig.width = 7}
-set.seed(1)
-
-labels <- rownames(tissue_cohesion_matrix)
-labels[sample(1:189, 125)] <- ""
-plot_community_graphs(tissue_cohesion_matrix,
-                      vertex.label = labels,
-                      vertex.size = 4)
+```{r}
+tissue_cohesion <- cohesion_matrix(tissue_dist)
 ```
 
 The `community_clusters()` function can be used to identify the clusters of each tissue sample. Since the output is a data frame, we can summarize the clusters using commonly used data analysis techniques. For demonstration purposes, we will use the \CRANpkg{dplyr} package to summarize the contribution of clusters.
 
 ```{r}
-library(dplyr)
-community_clusters(tissue_cohesion_matrix) %>%
-  group_by(cluster, point) %>%
-  count()
+community_clusters(tissue_cohesion) |>
+  dplyr::count(cluster, point)
 ```
 
 From this, we can glean that cluster one consists of two types of tissue, the kidney and endometrium. Cluster two is comprised of only the hippocampus. 
+
+We can also display the relationships between tissue samples using the `plot_community_graphs()` function (Figure \ref{fig:fig4}). For clarity of the display, we show how to remove the labels using `show_labels = FALSE`. We will instead color by the labels by passing these to the `vertex.color` parameter through the  `...` to the `plot.igraph` function. Similarly, we can add a legend using the `legend()` function, as you would for a \CRANpkg{igraph} visualization. Additionally, we use the `edge_width_factor` and `emph_strong` arguments to adjust the width of the lines between and within PaLD clusters.
+
+```{r, eval = FALSE}
+labels <- rownames(tissue_cohesion)
+plot_community_graphs(tissue_cohesion,
+                      show_labels = FALSE,
+                      vertex.size = 4,
+                      vertex.color = as.factor(labels),
+                      edge_width_factor = 35,
+                      emph_strong = 5) 
+legend("topleft", 
+       legend = unique(as.factor(labels)), 
+       pt.bg = unique(as.factor(labels)),
+       col = "black",
+       pch = 21)
+```
+
+```{r, include = FALSE, output = "hide"}
+set.seed(1)
+tissue_cohesion <- cohesion_matrix(tissue_dist)
+labels <- rownames(tissue_cohesion)
+png("fig5.png", res = 300, height = 3000, width = 3000)
+plot_community_graphs(tissue_cohesion,
+                      show_labels = FALSE,
+                      vertex.size = 4,
+                      vertex.color = as.factor(labels),
+                      edge_width_factor = 35,
+                      emph_strong = 5) 
+legend("topright", 
+       legend = unique(as.factor(labels)), 
+       pt.bg = unique(as.factor(labels)),
+       col = "black",
+       pch = 21)
+dev.off()
+```
+
+
+```{r fig4, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "PaLD clustering of tissue data. The line colors indicate the PaLD clusters, the point colors indicate the tissue classification.", out.width = "100%"}
+knitr::include_graphics("fig5.png")
+```
+
+## Cognate-based Language Families 
+
+This example performs a PaLD analysis on a data set from \citet{dyen92} that examines the relationship between 87 Indo-European languages from the perspective of cognates. A `dist` object was created from this data set and included in the \CRANpkg{pald} package in an object called `cognate_dist`.
+
+This example will demonstrate how you can apply functions in the \CRANpkg{igraph} package to objects output from the \CRANpkg{pald} package. We can first use the `cohesion_matrix()` function to calculate the cohesion matrix and the `community_graphs()` function to create a list with the weighted community graph, the weighted community graph with only strong ties included (and all others set to 0), and the layout. From this, we can extract the graph with only the strong ties, here called `cognate_graph_strong`.
+
+```{r}
+cognate_cohesion <- cohesion_matrix(cognate_dist)
+cognate_graphs <- community_graphs(cognate_cohesion)
+
+cognate_graph_strong <- cognate_graphs[["G_strong"]]
+```
+
+We can then use the `neighbors()` function from the \CRANpkg{igraph} package to extract the neighbors in this graph. For example, if we wanted to extract all neighbors where the language is "French", we would run the following.
+
+```{r}
+french_neighbors <- igraph::neighbors(cognate_graph_strong, "French")
+french_neighbors
+```
+
+Similarly, we can print the associated neighborhood weights by subsetting the cohesion matrix.
+
+```{r}
+cognate_cohesion["French", french_neighbors]
+```
+
 
 ### Clustering generated data
 
@@ -228,23 +280,57 @@ The \CRANpkg{pald} includes three randomly generated data frames corresponding t
 * `exdata2` is a data set consisting of 16 points to recreate Figure 2 in @berenhaut2022social 
 * `exdata3` is a data set consisting of 240 points to recreate Figure 4D in @berenhaut2022social 
 
-Here, we will demonstrate how to use `exdata3`. These points were generated from bivariate normal distributions with varying means and variances.
+Here, we will demonstrate how to use `exdata3`. These points were generated from bivariate normal distributions with varying means and variances. There are eight "true" clusters.
+
+We will demonstrate how we can compare PaLD to two clustering methods: *k*-means and hierarchical clustering. The code below calculates the cohesion matrix (`exdata_cohesion`) as well as the clusters via PaLD (`exdata_pald`), *k*-means (`exdata_kmeans`) and hierarchical clustering (`exdata_hclust`).
 
 ```{r}
-exdata_cohesion_matrix <- exdata3 |>
+exdata_cohesion <- exdata3 |>
   dist() |>
   cohesion_matrix()
+
+exdata_pald <- community_clusters(exdata_cohesion)$cluster
+
+exdata_kmeans <- kmeans(exdata3, 8)$cluster
+
+exdata_hclust <- exdata3 |>
+  dist() |>
+  hclust() |>
+  cutree(k = 8) 
 ```
 
-When plotting the `exdata3` PaLD graph, we want the layout to match the layout of the original data, so we will pass `as.matrix(exdata3)` to the `layout` parameter in the `plot_community_graphs()` function. Additionally, here the row names are meaningless, they just correspond to the location of the generated data, so we can remove the labels on the plot by setting `show_labels = FALSE`. The `only_strong` parameter will only display the strongly connected edges. Additionally, we can optionally pass parameters through the `...` to `plot::igraph` function; for example, to increase the vertex size we can set `vertex.size = 5`. Figure \ref{fig:fig6} shows this.
 
-```{r fig6, fig.cap = "PaLD clustering of randomly generated example data (from Figure 4D from Berenhaut et al. (2022))"}
-plot_community_graphs(exdata_cohesion_matrix,
-                layout = as.matrix(exdata3),
-                show_labels = FALSE, 
-                only_strong = TRUE,
-                vertex.size = 5)
+We can compare this to the clustering generated by *k*-means and hierarchical clustering (Figure \ref{fig:fig5}).
+
+```{r fig5, fig.cap = "PaLD clustering of randomly generated example data (from Figure 4D from Berenhaut et al. (2022)) compared to *k*-means and hierarchical clustering with k = 8."}
+par(mfrow = c(1, 3), pty = "s")
+plot(
+  exdata3,
+  pch = 16,
+  col = pald_colors[exdata_pald],
+  xlab = "",
+  ylab = "",
+  main = "PaLD Clusters"
+)
+plot(
+  exdata3,
+  pch = 16,
+  col = pald_colors[exdata_kmeans],
+  xlab = "",
+  ylab = "",
+  main = "K-Means Clusters (k = 8)"
+)
+plot(
+  exdata3,
+  pch = 16,
+  col = pald_colors[exdata_hclust],
+  xlab = "",
+  ylab = "",
+  main = "Hiearchical Clusters (k = 8)"
+)
 ```
+
+Cohesion is particularly useful when considering data with varying local density, see discussion in [@berenhaut2022social].  Note that the PaLD algorithm is able to detect the eight natural groups within the data without the use of any additional inputs (e.g., number of clusters) nor optimization criteria.  Despite providing the "correct" number of clusters (i.e., $k = 8$) both *k*-means and hierarchical clustering did not give the desired result.  
 
 The ability of the PaLD algorithm to discern clusters is demonstrated here.
 
