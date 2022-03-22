@@ -11,14 +11,57 @@ An abstract of less than 150 words.
 \hypertarget{introduction}{%
 \subsection{Introduction}\label{introduction}}
 
-\begin{itemize}
-\tightlist
-\item
-  Describe PaLD (Ken \& Kate?) \citep{berenhaut2022social}
-\end{itemize}
+Partitioned Local Depths (PaLD) is a framework for a holistic
+consideration of the community structure of distance-based data.
+Leveraging a socially inspired perspective, the method provides
+network-based community information which is founded on a new measure of
+local depth and pairwise cohesion (partitioned local depth). The method
+does not require distributional assumptions, optimization criteria, nor
+extraneous inputs. A complete description of the perspective, together
+with a discussion of the underlying social motivation, theoretical
+results, and applications to additional data sets is provided in
+\citet{berenhaut2022social}.
 
-We present a new package, \CRANpkg{pald}, for calculating partitioned
-local depth (PaLD) probabilities, implementing clustering analyses, and
+Building on existing approaches to (global) depth, local depth expresses
+features of centrality as an interpretable probability which is free of
+parameters and robust to outliers. Then, partitioning the probability
+which defines local depth, we obtain a measure of cohesion between pairs
+of points. Both local depth and cohesion reflect aspects of relative
+position (rather than absolute distance) and provide a straightforward
+way to account for varying density across the space. Specifically,
+provided that two sets are separated (in the sense that the minimum
+between-set distance is greater than the maximum within-set distance),
+cohesion is invariant under the contraction and dilation of the
+distances within each set. This property may be particularly valuable
+when one has reason to believe that the magnitude of distances varies
+across the space.
+
+As cohesion captures a sense of the relationship strength between
+points, we can then visualize the resulting community structure with a
+network whose edges are weighted by (mutual) cohesion. The underlying
+social framework motivates an elegant threshold for distinguishing
+between strongly and weakly cohesive pairs.
+
+As seen throughout this paper, we display the network obtained from
+cohesion using a force-directed graph drawing algorithm and emphasize
+the strong ties (colored by connected component). We refer to the
+connected components of the network of strong ties as ``clusters.'' Note
+that to qualify as a cluster in this definition, one may not have any
+strong ties with those outside the cluster, and thus the existence of
+disjoint groups is a strong signal for separation. Here, clusters are
+identified without additional user inputs nor optimization criteria. If
+one wishes to further break the community graph into groups, one may use
+community detection methods for networks (such as spectral clustering or
+the Louvain algorithm). Though only briefly considered here, one may
+also use the collection of strong ties in place of (weighted) k-nearest
+neighbors in settings such as classification and smoothing. Overall, the
+structural information obtained from local depth, cohesion and community
+graphs can provide a holistic perspective on the data which does not
+require the use of distributional assumptions, optimization criteria nor
+additional user inputs.
+
+We present a new package, \CRANpkg{pald}, for calculating Partitioned
+Local Depths (PaLD) probabilities, implementing clustering analyses, and
 creating data visualizations to represent the clusters. This paper will
 describe how to use the package as well as walk through two examples.
 
@@ -277,9 +320,9 @@ graphs <- community_graphs(cohesion)
 graphs[["G_strong"]]
 \end{Sinput}
 \begin{Soutput}
-#> IGRAPH dcdcffa UNW- 6 3 -- 
+#> IGRAPH b3faedc UNW- 6 3 -- 
 #> + attr: name (v/c), weight (e/n)
-#> + edges from dcdcffa (vertex names):
+#> + edges from b3faedc (vertex names):
 #> [1] A--B A--E D--F
 \end{Soutput}
 \end{Schunk}
@@ -495,7 +538,7 @@ french_neighbors <- igraph::neighbors(cognate_graph_strong, "French")
 french_neighbors
 \end{Sinput}
 \begin{Soutput}
-#> + 8/87 vertices, named, from 64a847b:
+#> + 8/87 vertices, named, from 46d19b2:
 #> [1] Italian         Ladin           Provencal       Walloon        
 #> [5] French_Creole_C French_Creole_D Spanish         Catalan
 \end{Soutput}
