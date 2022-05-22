@@ -28,13 +28,13 @@ parameters and robust to outliers. Then, partitioning the probability
 which defines local depth, we obtain a measure of cohesion between pairs
 of points. Both local depth and cohesion reflect aspects of relative
 position (rather than absolute distance) and provide a straightforward
-way to account for varying density across the space. Specifically,
-provided that two sets are separated (in the sense that the minimum
-between-set distance is greater than the maximum within-set distance),
-cohesion is invariant under the contraction and dilation of the
-distances within each set. This property may be particularly valuable
-when one has reason to believe that the magnitude of distances varies
-across the space.
+way to account for varying density across the space. Specifically, as
+shown in \citet{berenhaut2022social}, provided that two sets are
+separated (in the sense that the minimum between-set distance is greater
+than the maximum within-set distance), cohesion is invariant under the
+contraction and dilation of the distances within each set. This property
+may be particularly valuable when one has reason to believe that the
+magnitude of distances varies across the space.
 
 As cohesion captures a sense of the relationship strength between
 points, we can then visualize the resulting community structure with a
@@ -45,25 +45,27 @@ between strongly and weakly cohesive pairs.
 As seen throughout this paper, we display the network obtained from
 cohesion using a force-directed graph drawing algorithm and emphasize
 the strong ties (colored by connected component). We refer to the
-connected components of the network of strong ties as ``clusters.'' Note
-that to qualify as a cluster in this definition, one may not have any
-strong ties with those outside the cluster, and thus the existence of
-disjoint groups is a strong signal for separation. Here, clusters are
-identified without additional user inputs nor optimization criteria. If
-one wishes to further break the community graph into groups, one may use
-community detection methods for networks (such as spectral clustering or
-the Louvain algorithm). Though only briefly considered here, one may
-also use the collection of strong ties in place of (weighted) k-nearest
-neighbors in settings such as classification and smoothing. Overall, the
-structural information obtained from local depth, cohesion and community
-graphs can provide a holistic perspective on the data which does not
-require the use of distributional assumptions, optimization criteria nor
-additional user inputs.
+connected components of the network of strong ties as community
+``clusters.'' Note that to qualify as a cluster in this definition, one
+may not have any strong ties with those outside the cluster, and thus
+the existence of disjoint groups is a strong signal for separation.
+Here, clusters are identified without additional user inputs nor
+optimization criteria. If one wishes to further break the community
+graph into groups, one may use community detection methods for networks
+(such as spectral clustering or the Louvain algorithm). Though only
+briefly considered here, one may also use the collection of strong ties
+in place of (weighted) k-nearest neighbors in settings such as
+classification and smoothing. Overall, the structural information
+obtained from local depth, cohesion and community graphs can provide a
+holistic perspective on the data which does not require the use of
+distributional assumptions, optimization criteria nor additional user
+inputs.
 
 We present a new package, \CRANpkg{pald}, for calculating Partitioned
 Local Depths (PaLD) probabilities, implementing clustering analyses, and
-creating data visualizations to represent the clusters. This paper will
-describe how to use the package as well as walk through two examples.
+creating data visualizations to display community structure. This paper
+will describe how to use the package as well as walk through two
+examples.
 
 \hypertarget{pald}{%
 \subsection{pald}\label{pald}}
@@ -75,13 +77,12 @@ categories:
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Helper functions to organize data into the correct format, into
-  distance matrices and then cohesion matrices
+  A function for computing the cohesion matrix
 \item
-  Functions that convert a cohesion matrix into a variety of useful
-  formats, including partitioned local depths, clusters, and graphs
+  Functions for extracting useful information from the cohesion matrix,
+  such as local depths, neighbors, clusters, and graph objects
 \item
-  Plotting functions
+  Plotting functions for community graphs
 \end{enumerate}
 
 In addition, the package provides a number of pertinent example data
@@ -102,28 +103,32 @@ This functionality will be demonstrated below.
 \subsubsection{Creating the cohesion
 matrix}\label{creating-the-cohesion-matrix}}
 
-For demonstration purposes, below is a sample data frame with two
-variables, \texttt{x1} and \texttt{x2}. The methods put forth here work
-on data frames with higher dimensions, as described in the
-\textbf{Examples} section; we are simply choosing a small data frame
+The input for the Partitioned Local Depths (PaLD) is a distance matrix
+or \texttt{dist} object. Note that the collection of input distances (or
+dissimilarities) does not need to satisfy the triangle inequality.
+
+For demonstration purposes, we will show how one can compute a distance
+matrix from an input data frame with, say, two variables \texttt{x1} and
+\texttt{x2}. The input data may be of any dimension. The methods put
+forth here work on data frames with higher dimensions, as described in
+the \textbf{Examples} section; we are simply choosing a small data frame
 here for demonstration purposes.
 
 \begin{Schunk}
 \begin{Sinput}
 library(pald)
 df <- data.frame(
-  x1 = c(6, 8, 11, 16, 4, 14),
-  x2 = c(5, 4, 13, 7, 6, 10)
+  x1 = c(6, 8, 8, 16, 4, 14),
+  x2 = c(5, 4, 10, 8, 4, 10)
 )
 rownames(df) <- c("A", "B", "C", "D", "E", "F")
 \end{Sinput}
 \end{Schunk}
 
-The first step needed to calculate the partitioned local depths is to
-construct a \emph{distance matrix}. If the data are already in this
-form, the user can skip to the next step. The \texttt{dist()} function
-converts an input data frame into a distance matrix, as demonstrated
-below.
+The \texttt{dist()} function converts an input data frame into a
+distance matrix, as demonstrated below. If the data are already provided
+as a distance matrix (or \texttt{dist} object), the user can skip to the
+next step.
 
 \begin{Schunk}
 \begin{Sinput}
@@ -131,17 +136,19 @@ d <- dist(df)
 \end{Sinput}
 \end{Schunk}
 
-This will create a \texttt{dist} object. If converted to a matrix, this
-will be a \(n\times n\) distance matrix, where \(n\) corresponds to the
-number of observations in the original data frame, in this example
-\(n = 6\).
+The function above creates a \texttt{dist} object. If converted to a
+matrix, this will be a \(n\times n\) distance matrix, where \(n\)
+corresponds to the number of observations in the original data frame, in
+this example \(n = 6\).
 
-This dist object, or equivalently a distance matrix, can then be passed
-to the \texttt{cohesion\_matrix()} function in order to calculate the
-pairwise cohesion values. Cohesion is an interpretable probability that
-reflects the strength of alignment of two points. Again, if the user
-begins with a distance matrix, they can skip the first step and simply
-input the distance matrix into this function.
+This \texttt{dist} object, or a distance matrix, can then be passed to
+the \texttt{cohesion\_matrix()} function in order to calculate the
+pairwise cohesion values.
+
+Cohesion is an interpretable probability that reflects the strength of
+alignment of two points within local regions. It captures aspects of the
+relative positioning of points and accounts for varying density across
+the space.
 
 \begin{Schunk}
 \begin{Sinput}
@@ -149,13 +156,13 @@ d <- dist(df)
 cohesion_matrix(d)
 \end{Sinput}
 \begin{Soutput}
-#>           A         B         C         D         E         F
-#> A 0.2333333 0.1666667 0.0000000 0.0000000 0.1666667 0.0000000
-#> B 0.1333333 0.2333333 0.0000000 0.0000000 0.1000000 0.0000000
-#> C 0.0000000 0.0000000 0.2333333 0.1000000 0.0000000 0.1000000
-#> D 0.0000000 0.0000000 0.1000000 0.2666667 0.0000000 0.1666667
-#> E 0.1333333 0.1000000 0.0000000 0.0000000 0.2333333 0.0000000
-#> F 0.0000000 0.0000000 0.1000000 0.1666667 0.0000000 0.2666667
+#>            A          B          C         D          E         F
+#> A 0.25000000 0.18333333 0.06666667 0.0000000 0.18333333 0.0000000
+#> B 0.14000000 0.24000000 0.05000000 0.0000000 0.10666667 0.0000000
+#> C 0.07333333 0.07333333 0.20333333 0.0000000 0.03333333 0.0800000
+#> D 0.00000000 0.00000000 0.00000000 0.2333333 0.00000000 0.1333333
+#> E 0.14000000 0.10666667 0.03333333 0.0000000 0.24000000 0.0000000
+#> F 0.00000000 0.00000000 0.05000000 0.1400000 0.00000000 0.2400000
 #> attr(,"class")
 #> [1] "cohesion_matrix" "matrix"          "array"
 \end{Soutput}
@@ -171,24 +178,24 @@ df |>
   cohesion_matrix()
 \end{Sinput}
 \begin{Soutput}
-#>           A         B         C         D         E         F
-#> A 0.2333333 0.1666667 0.0000000 0.0000000 0.1666667 0.0000000
-#> B 0.1333333 0.2333333 0.0000000 0.0000000 0.1000000 0.0000000
-#> C 0.0000000 0.0000000 0.2333333 0.1000000 0.0000000 0.1000000
-#> D 0.0000000 0.0000000 0.1000000 0.2666667 0.0000000 0.1666667
-#> E 0.1333333 0.1000000 0.0000000 0.0000000 0.2333333 0.0000000
-#> F 0.0000000 0.0000000 0.1000000 0.1666667 0.0000000 0.2666667
+#>            A          B          C         D          E         F
+#> A 0.25000000 0.18333333 0.06666667 0.0000000 0.18333333 0.0000000
+#> B 0.14000000 0.24000000 0.05000000 0.0000000 0.10666667 0.0000000
+#> C 0.07333333 0.07333333 0.20333333 0.0000000 0.03333333 0.0800000
+#> D 0.00000000 0.00000000 0.00000000 0.2333333 0.00000000 0.1333333
+#> E 0.14000000 0.10666667 0.03333333 0.0000000 0.24000000 0.0000000
+#> F 0.00000000 0.00000000 0.05000000 0.1400000 0.00000000 0.2400000
 #> attr(,"class")
 #> [1] "cohesion_matrix" "matrix"          "array"
 \end{Soutput}
 \end{Schunk}
 
-The \emph{cohesion matrix} output by the \texttt{cohesion\_matrix()} is
-the main input for the majority of the remaining functions.
+The \emph{cohesion matrix} output by the \texttt{cohesion\_matrix()}
+function is the main input for the majority of the remaining functions.
 
-\hypertarget{functions-that-convert-a-cohesion-matrix-into-useful-formats}{%
-\subsubsection{Functions that convert a cohesion matrix into useful
-formats}\label{functions-that-convert-a-cohesion-matrix-into-useful-formats}}
+\hypertarget{functions-for-extracting-information-from-the-cohesion-matrix}{%
+\subsubsection{Functions for extracting information from the cohesion
+matrix}\label{functions-for-extracting-information-from-the-cohesion-matrix}}
 
 From the \emph{cohesion matrix}, a variety of useful quantities can be
 calculated. Below, we create a cohesion matrix using the functions
@@ -202,33 +209,6 @@ df |>
 \end{Sinput}
 \end{Schunk}
 
-To calculate the \emph{clusters} that each point will fall into, we can
-use the \texttt{community\_clusters()} function. This will output a data
-frame with two columns, the first will correspond to the \texttt{point},
-as identified by the row name of the original input data frame,
-\texttt{df}, the second will identify the \texttt{cluster} that each
-point belongs to.
-
-\begin{Schunk}
-\begin{Sinput}
-community_clusters(cohesion)
-\end{Sinput}
-\begin{Soutput}
-#>   point cluster
-#> A     A       1
-#> B     B       1
-#> C     C       2
-#> D     D       3
-#> E     E       1
-#> F     F       3
-\end{Soutput}
-\end{Schunk}
-
-In this example, three clusters are identified with these six points.
-Points \texttt{A}, \texttt{B}, and \texttt{E} fall into cluster 1. Point
-\texttt{C} is in cluster 2 and points \texttt{D} and \texttt{F} fall
-into cluster 3.
-
 The \texttt{local\_depths()} function calculates the \emph{depths} of
 each point, outputting a vector of local depths. Local depth is an
 interpretable probability which reflects aspects of relative position
@@ -240,7 +220,7 @@ local_depths(cohesion)
 \end{Sinput}
 \begin{Soutput}
 #>         A         B         C         D         E         F 
-#> 0.5666667 0.4666667 0.4333333 0.5333333 0.4666667 0.5333333
+#> 0.6833333 0.5366667 0.4633333 0.3666667 0.5200000 0.4300000
 \end{Soutput}
 \end{Schunk}
 
@@ -248,57 +228,46 @@ In this case, the deepest point is \texttt{A}.
 
 The \texttt{strong\_threshold()} function will calculate the cohesion
 threshold for strong ties. This is equal to half the average of the
-diagonal cohesion matrix. This is a threshold that may be used to
-distinguish between strong and weak ties.
+diagonal cohesion matrix.\citep{berenhaut2022social} This is a threshold
+that may be used to distinguish between strong and weak ties.
 
 \begin{Schunk}
 \begin{Sinput}
 strong_threshold(cohesion)
 \end{Sinput}
 \begin{Soutput}
-#> [1] 0.1222222
+#> [1] 0.1172222
 \end{Soutput}
 \end{Schunk}
 
-In this case, the threshold is \texttt{0.12}.
-
-The \texttt{any\_isolated()} function will check whether there are any
-isolated points that will inadvertently be dropped by a graph.
-
-\begin{Schunk}
-\begin{Sinput}
-any_isolated(cohesion)
-\end{Sinput}
-\end{Schunk}
-
-Here, there are no isolated points.
+In this case, the threshold is \texttt{0.117}.
 
 The function \texttt{cohesion\_strong()} will update the cohesion matrix
 to set all weak ties to zero (via the \texttt{strong\_threshold()}
-function). Optionally, the matrix will also be symmetrized, with the
-default parameter \texttt{symmetric\ =\ TRUE}.
+function). Optionally, the matrix will also be symmetrized, using the
+entry-wise (parallel) minimum of the cohesion matrix and its transpose,
+with the default parameter \texttt{symmetric\ =\ TRUE}.
 
 \begin{Schunk}
 \begin{Sinput}
 cohesion_strong(cohesion)
 \end{Sinput}
 \begin{Soutput}
-#>           A         B         C         D         E         F
-#> A 0.2333333 0.1333333 0.0000000 0.0000000 0.1333333 0.0000000
-#> B 0.1333333 0.2333333 0.0000000 0.0000000 0.0000000 0.0000000
-#> C 0.0000000 0.0000000 0.2333333 0.0000000 0.0000000 0.0000000
-#> D 0.0000000 0.0000000 0.0000000 0.2666667 0.0000000 0.1666667
-#> E 0.1333333 0.0000000 0.0000000 0.0000000 0.2333333 0.0000000
-#> F 0.0000000 0.0000000 0.0000000 0.1666667 0.0000000 0.2666667
+#>      A    B         C         D    E         F
+#> A 0.25 0.14 0.0000000 0.0000000 0.14 0.0000000
+#> B 0.14 0.24 0.0000000 0.0000000 0.00 0.0000000
+#> C 0.00 0.00 0.2033333 0.0000000 0.00 0.0000000
+#> D 0.00 0.00 0.0000000 0.2333333 0.00 0.1333333
+#> E 0.14 0.00 0.0000000 0.0000000 0.24 0.0000000
+#> F 0.00 0.00 0.0000000 0.1333333 0.00 0.2400000
 #> attr(,"class")
 #> [1] "cohesion_matrix" "matrix"          "array"
 \end{Soutput}
 \end{Schunk}
 
-Finally, the \texttt{community\_graphs()} function takes the cohesion
-matrix and creates \CRANpkg{igraph} objects, graphs that describes the
-relationship between the points. This function will output a list of
-three objects:
+The \texttt{community\_graphs()} function takes the cohesion matrix and
+creates \CRANpkg{igraph} objects, graphs that describe the relationship
+between the points. This function will output a list of three objects:
 
 \begin{itemize}
 \tightlist
@@ -320,16 +289,55 @@ graphs <- community_graphs(cohesion)
 graphs[["G_strong"]]
 \end{Sinput}
 \begin{Soutput}
-#> IGRAPH b3faedc UNW- 6 3 -- 
+#> IGRAPH 8eef810 UNW- 6 3 -- 
 #> + attr: name (v/c), weight (e/n)
-#> + edges from b3faedc (vertex names):
+#> + edges from 8eef810 (vertex names):
 #> [1] A--B A--E D--F
 \end{Soutput}
 \end{Schunk}
 
-Here we see that there are three connected components, points \texttt{A}
-and \texttt{B}, and \texttt{A} and \texttt{E} which form the first
-cluster, and points \texttt{D} and \texttt{F} which form another.
+Here we see that there are three connected components, ties \texttt{A-B}
+and and \texttt{A-E} which form the first cluster, and the tie
+\texttt{D-F} which forms another.
+
+The \texttt{any\_isolated()} function will check whether there are any
+isolated points that will inadvertently be dropped by a graph.
+
+\begin{Schunk}
+\begin{Sinput}
+any_isolated(cohesion)
+\end{Sinput}
+\end{Schunk}
+
+Here, there are no isolated points.
+
+The ``clusters'' identified by PaLD are the connected components of the
+graph of strong ties, \texttt{G\_strong}. To directly calculate them, we
+can use the \texttt{community\_clusters()} function. This will output a
+data frame with two columns, the first will correspond to the
+\texttt{point}, as identified by the row name of the original input data
+frame, \texttt{df}, the second will identify the \texttt{cluster} that
+each point belongs to.
+
+\begin{Schunk}
+\begin{Sinput}
+community_clusters(cohesion)
+\end{Sinput}
+\begin{Soutput}
+#>   point cluster
+#> A     A       1
+#> B     B       1
+#> C     C       2
+#> D     D       3
+#> E     E       1
+#> F     F       3
+\end{Soutput}
+\end{Schunk}
+
+In this example, three clusters are identified with these six points.
+Points \texttt{A}, \texttt{B}, and \texttt{E} fall into cluster 1. Point
+\texttt{C} is in cluster 2 and points \texttt{D} and \texttt{F} fall
+into cluster 3.
 
 \hypertarget{plotting-functions}{%
 \subsection{Plotting functions}\label{plotting-functions}}
@@ -337,19 +345,20 @@ cluster, and points \texttt{D} and \texttt{F} which form another.
 The final category of function is functions for data visualization. We
 can begin by visualizing the points in data frame \texttt{df} (Figure
 \ref{fig:fig1}). When visualizing these points, it is important to have
-a square plot so as to not distort the distances. When using the
-\CRANpkg{ggplot2} package for this visualization, you can use the
-\texttt{aspect.ratio\ \ =\ 1} argument in the \texttt{theme()} function.
-If using the \texttt{plot()} function included in the base library, you
-can set the plot area to be a square by using \texttt{par(pty\ =\ "s")}
-prior to calling the \texttt{plot()} function, as shown below.
+the aspect ratio of the x and y axes equal to 1 so as to not distort the
+distances. When using the \CRANpkg{ggplot2} package for this
+visualization, you can use the \texttt{coord\_fixed(ratio\ =\ 1)}
+function. If using the \texttt{plot()} function included in the base
+library, you can use the \texttt{asp\ =\ 1} argument.
 
 \begin{Schunk}
 \begin{Sinput}
 library(ggplot2)
 ggplot(df, aes(x1, x2)) +
   geom_text(label = rownames(df)) + 
-  theme(aspect.ratio = 1)
+  coord_fixed(ratio = 1) + 
+  xlim(c(4, 16)) + 
+  ylim(c(4, 16))
 \end{Sinput}
 \begin{figure}
 \includegraphics{manuscript_files/figure-latex/fig1-1} \caption[Visualize the points from data frame `df`]{Visualize the points from data frame `df`}\label{fig:fig1}
@@ -370,18 +379,21 @@ plot_community_graphs(cohesion)
 \end{Schunk}
 
 The \texttt{layout} argument allows the user to pass a matrix to dictate
-the layout of the graph. For example, if we wanted the graph to match
-the visualization displayed in Figure \ref{fig:fig1}, we can pass
-\texttt{as.matrix(df)}, or a matrix of the data frame \texttt{df} to the
-\texttt{layout} argument (Figure \ref{fig:fig3}. Notice in the code
-below, we set \texttt{par(pty\ =\ "s")} in order to ensure that we have
-a square plotting region. Additionally, this
-\texttt{plot\_community\_graphs()} function will also permit parameters
-that can be passed to the \texttt{plot.igraph()} function. For example,
-we can pass arguments to the \texttt{plot.igraph} function via the
-\texttt{...}, for example to increase the vertex size and change the
-vertex label color, we can specify \texttt{vertex.size\ =\ 15} and
-\texttt{vertex.label.color\ =\ "white"}.
+the 2-dimensional layout of the graph. For example, if we wanted the
+graph to match the visualization displayed in Figure \ref{fig:fig1}, we
+can pass \texttt{as.matrix(df)}, or a matrix of the data frame
+\texttt{df} to the \texttt{layout} argument (Figure \ref{fig:fig3}).
+Additionally, this \texttt{plot\_community\_graphs()} function will also
+permit parameters that can be passed to the \texttt{plot.igraph()}
+function. For example, we can pass arguments to the \texttt{plot.igraph}
+function via \texttt{...}, for example to increase the vertex size and
+change the vertex label color, we can specify
+\texttt{vertex.size\ =\ 100} and
+\texttt{vertex.label.color\ =\ "white"}. Additionally, to allow axes, we
+use \texttt{axes\ =\ TRUE} and to put them back on the original scale we
+set \texttt{rescale\ =\ FALSE}, resetting the axis limits using
+\texttt{xlim} and \texttt{ylim}. The \texttt{par(pty\ =\ "s")} function
+forces the subsequent plot to be square.
 
 \begin{Schunk}
 \begin{Sinput}
@@ -389,11 +401,16 @@ par(pty = "s")
 
 plot_community_graphs(cohesion, 
                       layout = as.matrix(df),
-                      vertex.size = 15,
-                      vertex.label.color = "white")
+                      vertex.size = 100,
+                      vertex.label.color = "white",
+                      axes = TRUE,
+                      rescale = FALSE,
+                      asp = 1,
+                      xlim = c(4, 16),
+                      ylim = c(4, 16))
 \end{Sinput}
 \begin{figure}
-\includegraphics{manuscript_files/figure-latex/fig3-1} \caption[PaLD graph displaying the relationship between the points in data frame `d`, matching the original layout in Figure 1]{PaLD graph displaying the relationship between the points in data frame `d`, matching the original layout in Figure 1}\label{fig:fig3}
+\includegraphics{manuscript_files/figure-latex/fig3-1} \caption[PaLD graph displaying the relationship between the points in data frame `df`, matching the original layout in Figure 1]{PaLD graph displaying the relationship between the points in data frame `df`, matching the original layout in Figure 1}\label{fig:fig3}
 \end{figure}
 \end{Schunk}
 
@@ -407,7 +424,7 @@ clustering examples.
 \subsubsection{Clustering tissue gene expression
 data}\label{clustering-tissue-gene-expression-data}}
 
-The first example if from a subset of tissue gene expression data from
+The first example is from a subset of tissue gene expression data from
 \citet{zilliox2007gene}, \citet{mccall2011gene}, and
 \citet{mccall2014gene}, obtained from the \textbf{tissuesGeneExpression}
 bioconductor package \citep{tissue}. A \texttt{dist} object was created
@@ -471,7 +488,7 @@ clarity of the display, we show how to remove the labels using
 \texttt{show\_labels\ =\ FALSE}. We will instead color by the labels by
 passing these to the \texttt{vertex.color} parameter through the
 \texttt{...} to the \texttt{plot.igraph} function. Similarly, we can add
-a legend using the \texttt{legend()} function, as you would for a
+a legend using the \texttt{legend()} function, as you would for an
 \CRANpkg{igraph} visualization. Additionally, we use the
 \texttt{edge\_width\_factor} and \texttt{emph\_strong} arguments to
 adjust the width of the lines between and within PaLD clusters.
@@ -495,7 +512,7 @@ legend("topleft",
 
 \begin{Schunk}
 \begin{figure}
-\includegraphics[width=1\linewidth]{fig5} \caption[PaLD clustering of tissue data]{PaLD clustering of tissue data. The line colors indicate the PaLD clusters, the point colors indicate the tissue classification.}\label{fig:fig4}
+\includegraphics[width=1\linewidth]{fig5} \caption[Community cluster network for the tissue data]{Community cluster network for the tissue data. The line colors indicate the PaLD clusters, the point colors indicate the tissue classification.}\label{fig:fig4}
 \end{figure}
 \end{Schunk}
 
@@ -528,8 +545,8 @@ cognate_graph_strong <- cognate_graphs[["G_strong"]]
 \end{Schunk}
 
 We can then use the \texttt{neighbors()} function from the
-\CRANpkg{igraph} package to extract the neighbors in this graph. For
-example, if we wanted to extract all neighbors where the language is
+\CRANpkg{igraph} package to extract the strong neighbors in this graph.
+For example, if we wanted to extract all neighbors where the language is
 ``French'', we would run the following.
 
 \begin{Schunk}
@@ -538,7 +555,7 @@ french_neighbors <- igraph::neighbors(cognate_graph_strong, "French")
 french_neighbors
 \end{Sinput}
 \begin{Soutput}
-#> + 8/87 vertices, named, from 46d19b2:
+#> + 8/87 vertices, named, from 9c17296:
 #> [1] Italian         Ladin           Provencal       Walloon        
 #> [5] French_Creole_C French_Creole_D Spanish         Catalan
 \end{Soutput}
@@ -563,7 +580,7 @@ cognate_cohesion["French", french_neighbors]
 \subsubsection{Clustering generated
 data}\label{clustering-generated-data}}
 
-The \CRANpkg{pald} includes three randomly generated data frames
+The \CRANpkg{pald} package includes three randomly generated data frames
 corresponding to plots from \citet{berenhaut2022social}:
 
 \begin{itemize}
@@ -587,8 +604,8 @@ We will demonstrate how we can compare PaLD to two clustering methods:
 \emph{k}-means and hierarchical clustering. The code below calculates
 the cohesion matrix (\texttt{exdata\_cohesion}) as well as the clusters
 via PaLD (\texttt{exdata\_pald}), \emph{k}-means
-(\texttt{exdata\_kmeans}) and hierarchical clustering
-(\texttt{exdata\_hclust}).
+(\texttt{exdata\_kmeans}) and hierarchical clustering using complete
+linkage (\texttt{exdata\_hclust}).
 
 \begin{Schunk}
 \begin{Sinput}
@@ -619,7 +636,8 @@ plot(
   col = pald_colors[exdata_pald],
   xlab = "",
   ylab = "",
-  main = "PaLD Clusters"
+  main = "PaLD Clusters",
+  asp = 1
 )
 plot(
   exdata3,
@@ -627,7 +645,8 @@ plot(
   col = pald_colors[exdata_kmeans],
   xlab = "",
   ylab = "",
-  main = "K-Means Clusters (k = 8)"
+  main = "K-Means Clusters (k = 8)",
+  asp = 1
 )
 plot(
   exdata3,
@@ -635,11 +654,12 @@ plot(
   col = pald_colors[exdata_hclust],
   xlab = "",
   ylab = "",
-  main = "Hiearchical Clusters (k = 8)"
+  main = "Hiearchical Clusters (k = 8)",
+  asp = 1
 )
 \end{Sinput}
 \begin{figure}
-\includegraphics{manuscript_files/figure-latex/fig5-1} \caption[PaLD clustering of randomly generated example data (from Figure 4D from Berenhaut et al]{PaLD clustering of randomly generated example data (from Figure 4D from Berenhaut et al. (2022)) compared to *k*-means and hierarchical clustering with k = 8.}\label{fig:fig5}
+\includegraphics{manuscript_files/figure-latex/fig5-1} \caption[PaLD clustering of randomly generated example data (from Figure 4D from Berenhaut et al]{PaLD clustering of randomly generated example data (from Figure 4D from Berenhaut et al. (2022)) compared to k-means and hierarchical clustering with k = 8.}\label{fig:fig5}
 \end{figure}
 \end{Schunk}
 
@@ -651,15 +671,12 @@ nor optimization criteria. Despite providing the ``correct'' number of
 clusters (i.e., \(k = 8\)) both \emph{k}-means and hierarchical
 clustering did not give the desired result.
 
-The ability of the PaLD algorithm to discern clusters is demonstrated
-here.
-
 \hypertarget{summary}{%
 \subsection{Summary}\label{summary}}
 
-This paper introduces the \CRANpkg{pald} package, demonstrating it's
-utility for providing a parameter-free clustering algorithm that can
-easily be applied to any data set.
+This paper introduces the \CRANpkg{pald} package, demonstrating its
+utility for providing parameter-free clustering which can easily be
+implemented for a variety of data sets.
 
 \bibliography{RJreferences}
 

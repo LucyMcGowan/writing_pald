@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.3.1)  22 MAR 2022 13:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.6)  22 MAY 2022 18:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **RJwrapper.tex
 (./RJwrapper.tex
 LaTeX2e <2021-11-15> patch level 1
-L3 programming layer <2022-02-24> (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/base/report.cls
+L3 programming layer <2022-05-04> (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/base/report.cls
 Document Class: report 2021/10/04 v1.4n Standard LaTeX document class
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
@@ -272,7 +272,7 @@ Package: fancyhdr 2021/01/28 v4.0.1 Extensive control of page headers and footer
 \f@nch@O@olf=\skip56
 \f@nch@O@orf=\skip57
 ) (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtype.sty
-Package: microtype 2022/02/22 v3.0c Micro-typographical refinements (RS)
+Package: microtype 2022/03/14 v3.0d Micro-typographical refinements (RS)
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count284
@@ -283,19 +283,19 @@ Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 LaTeX Info: Redefining \noprotrusionifhmode on input line 1027.
 LaTeX Info: Redefining \leftprotrusion on input line 1028.
 LaTeX Info: Redefining \rightprotrusion on input line 1036.
-LaTeX Info: Redefining \textls on input line 1200.
+LaTeX Info: Redefining \textls on input line 1195.
 \MT@outer@kern=\dimen199
-LaTeX Info: Redefining \textmicrotypecontext on input line 1786.
+LaTeX Info: Redefining \textmicrotypecontext on input line 1781.
 \MT@listname@count=\count286
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtype-pdftex.def
-File: microtype-pdftex.def 2022/02/22 v3.0c Definitions specific to pdftex (RS)
-LaTeX Info: Redefining \lsstyle on input line 897.
-LaTeX Info: Redefining \lslig on input line 897.
+File: microtype-pdftex.def 2022/03/14 v3.0d Definitions specific to pdftex (RS)
+LaTeX Info: Redefining \lsstyle on input line 900.
+LaTeX Info: Redefining \lslig on input line 900.
 \MT@outer@space=\skip58
 )
 Package microtype Info: Loading configuration file microtype.cfg.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtype.cfg
-File: microtype.cfg 2022/02/22 v3.0c microtype main configuration file (RS)
+File: microtype.cfg 2022/03/14 v3.0d microtype main configuration file (RS)
 )) (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/helvet.sty
 Package: helvet 2020/03/25 PSNFSS-v9.3 (WaS) 
 ) (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/palatino.sty
@@ -450,7 +450,7 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count299
 ) (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
-Package: fancyvrb 2021/12/21 4.1b verbatim text (tvz,hv)
+Package: fancyvrb 2022/04/12 4.2 verbatim text (tvz,hv)
 \FV@CodeLineNo=\count300
 \FV@InFile=\read3
 \FV@TabBox=\box63
@@ -468,9 +468,9 @@ LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 ) (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/caption/caption.sty
-Package: caption 2022/02/28 v3.6a Customizing captions (AR)
+Package: caption 2022/03/01 v3.6b Customizing captions (AR)
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
-Package: caption3 2022/02/28 v2.3a caption3 kernel (AR)
+Package: caption3 2022/03/17 v2.3b caption3 kernel (AR)
 \caption@tempdima=\dimen266
 \captionmargin=\dimen267
 \caption@leftmargin=\dimen268
@@ -575,7 +575,7 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@lastruleclass=\count320
 \@thisrulewidth=\dimen297
 ) (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
+File: l3backend-pdftex.def 2022-04-20 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count321
 \l__pdf_internal_box=\box68
 ) (./RJwrapper.aux)
@@ -688,12 +688,12 @@ Package caption Info: End \AtBeginDocument code.
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 12.
 
-LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 98.
+LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 99.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4.fd
 File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
 )
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 9.18004pt on input line 98.
+(Font)              scaled to size 9.18004pt on input line 99.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zi4' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
@@ -701,23 +701,23 @@ Package microtype Info: Loading generic protrusion settings for font family
 [1{/Users/lucymcgowan/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ]
-LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 135.
+LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 140.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
-LaTeX Font Info:    Trying to load font information for OML+zplm on input line 135.
+LaTeX Font Info:    Trying to load font information for OML+zplm on input line 140.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
-LaTeX Font Info:    Trying to load font information for OMS+zplm on input line 135.
+LaTeX Font Info:    Trying to load font information for OMS+zplm on input line 140.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
-LaTeX Font Info:    Trying to load font information for OMX+zplm on input line 135.
+LaTeX Font Info:    Trying to load font information for OMX+zplm on input line 140.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
-LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 135.
+LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 140.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
@@ -726,73 +726,72 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 135.
+(Font)              scaled to size 9.37807pt on input line 140.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 135.
+(Font)              scaled to size 7.29405pt on input line 140.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 135.
+(Font)              scaled to size 5.21004pt on input line 140.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 135.
+(Font)              scaled to size 9.37807pt on input line 140.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 135.
+(Font)              scaled to size 7.29405pt on input line 140.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 135.
+(Font)              scaled to size 5.21004pt on input line 140.
 [2]
-LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 306.
+LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 275.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 ) [3]
-<manuscript_files/figure-latex/fig1-1.pdf, id=86, 469.755pt x 289.08pt>
+<manuscript_files/figure-latex/fig1-1.pdf, id=90, 469.755pt x 289.08pt>
 File: manuscript_files/figure-latex/fig1-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/fig1-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/fig1-1.pdf  used on input line 355.
+Package pdftex.def Info: manuscript_files/figure-latex/fig1-1.pdf  used on input line 364.
 (pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 
-Overfull \hbox (71.41528pt too wide) in paragraph at lines 355--355
+Overfull \hbox (71.41528pt too wide) in paragraph at lines 364--364
 [][] 
  []
 
-<manuscript_files/figure-latex/fig2-1.pdf, id=88, 469.755pt x 289.08pt>
+<manuscript_files/figure-latex/fig2-1.pdf, id=92, 469.755pt x 289.08pt>
 File: manuscript_files/figure-latex/fig2-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/fig2-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/fig2-1.pdf  used on input line 368.
+Package pdftex.def Info: manuscript_files/figure-latex/fig2-1.pdf  used on input line 377.
 (pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 
-Overfull \hbox (71.41528pt too wide) in paragraph at lines 368--368
+Overfull \hbox (71.41528pt too wide) in paragraph at lines 377--377
 [][] 
  []
 
-[4 <./manuscript_files/figure-latex/fig1-1.pdf>]
-<manuscript_files/figure-latex/fig3-1.pdf, id=103, 469.755pt x 289.08pt>
+<manuscript_files/figure-latex/fig3-1.pdf, id=95, 469.755pt x 289.08pt>
 File: manuscript_files/figure-latex/fig3-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/fig3-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/fig3-1.pdf  used on input line 396.
+Package pdftex.def Info: manuscript_files/figure-latex/fig3-1.pdf  used on input line 413.
 (pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 
-Overfull \hbox (71.41528pt too wide) in paragraph at lines 396--396
+Overfull \hbox (71.41528pt too wide) in paragraph at lines 413--413
 [][] 
  []
 
-[5 <./manuscript_files/figure-latex/fig2-1.pdf>] [6 <./manuscript_files/figure-latex/fig3-1.pdf>]
-<fig5.png, id=142, 3011.25pt x 3011.25pt>
+[4] [5 <./manuscript_files/figure-latex/fig1-1.pdf> <./manuscript_files/figure-latex/fig2-1.pdf>] [6 <./manuscript_files/figure-latex/fig3-1.pdf>]
+<fig5.png, id=147, 3011.25pt x 3011.25pt>
 File: fig5.png Graphic file (type png)
 <use fig5.png>
-Package pdftex.def Info: fig5.png  used on input line 498.
+Package pdftex.def Info: fig5.png  used on input line 515.
 (pdftex.def)             Requested size: 398.33858pt x 398.32248pt.
-[7 <./fig5.png>] [8]
-<manuscript_files/figure-latex/fig5-1.pdf, id=174, 469.755pt x 289.08pt>
+[7] [8 <./fig5.png>]
+<manuscript_files/figure-latex/fig5-1.pdf, id=178, 469.755pt x 289.08pt>
 File: manuscript_files/figure-latex/fig5-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/fig5-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/fig5-1.pdf  used on input line 642.
+Package pdftex.def Info: manuscript_files/figure-latex/fig5-1.pdf  used on input line 662.
 (pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 
-Overfull \hbox (71.41528pt too wide) in paragraph at lines 642--642
+Overfull \hbox (71.41528pt too wide) in paragraph at lines 662--662
 [][] 
  []
 
@@ -800,35 +799,36 @@ Overfull \hbox (71.41528pt too wide) in paragraph at lines 642--642
 \tf@brf=\write6
 \openout6 = `RJwrapper.brf'.
 
-[9 <./manuscript_files/figure-latex/fig5-1.pdf>])
+[9])
 
 LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
-(Font)              using `T1/zi4/m/n' instead on input line 675.
+(Font)              using `T1/zi4/m/n' instead on input line 692.
 
+[10 <./manuscript_files/figure-latex/fig5-1.pdf>]
 LaTeX Font Info:    Font shape `T1/zi4/m/it' will be
-(Font)              scaled to size 9.18004pt on input line 685.
-) [10] (./RJwrapper.aux)
+(Font)              scaled to size 9.18004pt on input line 702.
+) [11] (./RJwrapper.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `RJwrapper.out' has not changed.
 (rerunfilecheck)             Checksum: ACEA5A8828DDC272A032C449416415BC;1145.
 Package rerunfilecheck Info: File `RJwrapper.brf' has not changed.
-(rerunfilecheck)             Checksum: 97184CC737F4E977302242461AF49F5E;874.
+(rerunfilecheck)             Checksum: 417D1F448E6D4388B5B11ABFD7CEE7B4;988.
  ) 
 Here is how much of TeX's memory you used:
- 26431 strings out of 480236
- 489385 string characters out of 5894542
- 779906 words of memory out of 5000000
- 43614 multiletter control sequences out of 15000+600000
- 505093 words of font info for 223 fonts, out of 8000000 for 9000
+ 26468 strings out of 480260
+ 490146 string characters out of 5893177
+ 780677 words of memory out of 5000000
+ 43601 multiletter control sequences out of 15000+600000
+ 506043 words of font info for 235 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 115i,11n,131p,1006b,700s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 115i,11n,131p,1006b,712s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}{/Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}</Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on RJwrapper.pdf (10 pages, 3289336 bytes).
+Output written on RJwrapper.pdf (11 pages, 3289462 bytes).
 PDF statistics:
- 257 PDF objects out of 1000 (max. 8388607)
- 218 compressed objects within 3 object streams
- 46 named destinations out of 1000 (max. 500000)
+ 267 PDF objects out of 1000 (max. 8388607)
+ 227 compressed objects within 3 object streams
+ 47 named destinations out of 1000 (max. 500000)
  53342 words of extra memory for PDF output out of 61914 (max. 10000000)
 

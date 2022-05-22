@@ -8,8 +8,8 @@ knitr::opts_chunk$set(fig.height = 4, message = FALSE, warning = FALSE)
 ## -----------------------------------------------------------------------------
 library(pald)
 df <- data.frame(
-  x1 = c(6, 8, 11, 16, 4, 14),
-  x2 = c(5, 4, 13, 7, 6, 10)
+  x1 = c(6, 8, 8, 16, 4, 14),
+  x2 = c(5, 4, 10, 8, 4, 10)
 )
 rownames(df) <- c("A", "B", "C", "D", "E", "F")
 
@@ -36,19 +36,11 @@ df |>
 
 
 ## -----------------------------------------------------------------------------
-community_clusters(cohesion)
-
-
-## -----------------------------------------------------------------------------
 local_depths(cohesion)
 
 
 ## -----------------------------------------------------------------------------
 strong_threshold(cohesion)
-
-
-## -----------------------------------------------------------------------------
-any_isolated(cohesion)
 
 
 ## -----------------------------------------------------------------------------
@@ -60,24 +52,39 @@ graphs <- community_graphs(cohesion)
 graphs[["G_strong"]]
 
 
+## -----------------------------------------------------------------------------
+any_isolated(cohesion)
+
+
+## -----------------------------------------------------------------------------
+community_clusters(cohesion)
+
+
 ## ----fig1, fig.cap = "Visualize the points from data frame `df`", message = FALSE, warning = FALSE----
 library(ggplot2)
 ggplot(df, aes(x1, x2)) +
   geom_text(label = rownames(df)) + 
-  theme(aspect.ratio = 1)
+  coord_fixed(ratio = 1) + 
+  xlim(c(4, 16)) + 
+  ylim(c(4, 16))
 
 
 ## ----fig2, fig.cap = "PaLD graph displaying the relationship between the points in data frame `df`"----
 plot_community_graphs(cohesion)
 
 
-## ----fig3, fig.cap = "PaLD graph displaying the relationship between the points in data frame `d`, matching the original layout in Figure 1"----
+## ----fig3, fig.cap = "PaLD graph displaying the relationship between the points in data frame `df`, matching the original layout in Figure 1"----
 par(pty = "s")
 
 plot_community_graphs(cohesion, 
                       layout = as.matrix(df),
-                      vertex.size = 15,
-                      vertex.label.color = "white")
+                      vertex.size = 100,
+                      vertex.label.color = "white",
+                      axes = TRUE,
+                      rescale = FALSE,
+                      asp = 1,
+                      xlim = c(4, 16),
+                      ylim = c(4, 16))
 
 
 ## -----------------------------------------------------------------------------
@@ -123,7 +130,7 @@ legend("topright",
 dev.off()
 
 
-## ----fig4, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "PaLD clustering of tissue data. The line colors indicate the PaLD clusters, the point colors indicate the tissue classification.", out.width = "100%"----
+## ----fig4, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Community cluster network for the tissue data. The line colors indicate the PaLD clusters, the point colors indicate the tissue classification.", out.width = "100%"----
 knitr::include_graphics("fig5.png")
 
 
@@ -158,7 +165,7 @@ exdata_hclust <- exdata3 |>
   cutree(k = 8) 
 
 
-## ----fig5, fig.cap = "PaLD clustering of randomly generated example data (from Figure 4D from Berenhaut et al. (2022)) compared to *k*-means and hierarchical clustering with k = 8."----
+## ----fig5, fig.cap = "PaLD clustering of randomly generated example data (from Figure 4D from Berenhaut et al. (2022)) compared to k-means and hierarchical clustering with k = 8."----
 par(mfrow = c(1, 3), pty = "s")
 plot(
   exdata3,
@@ -166,7 +173,8 @@ plot(
   col = pald_colors[exdata_pald],
   xlab = "",
   ylab = "",
-  main = "PaLD Clusters"
+  main = "PaLD Clusters",
+  asp = 1
 )
 plot(
   exdata3,
@@ -174,7 +182,8 @@ plot(
   col = pald_colors[exdata_kmeans],
   xlab = "",
   ylab = "",
-  main = "K-Means Clusters (k = 8)"
+  main = "K-Means Clusters (k = 8)",
+  asp = 1
 )
 plot(
   exdata3,
@@ -182,6 +191,7 @@ plot(
   col = pald_colors[exdata_hclust],
   xlab = "",
   ylab = "",
-  main = "Hiearchical Clusters (k = 8)"
+  main = "Hiearchical Clusters (k = 8)",
+  asp = 1
 )
 
