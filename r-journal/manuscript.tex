@@ -5,7 +5,13 @@
 \maketitle
 
 \abstract{%
-An abstract of less than 150 words.
+Partitioned Local Depths (PaLD) is a framework for a holistic
+consideration of the community structure of distance-based data. This
+paper describes an R package, \CRANpkg{pald}, for calculating
+Partitioned Local Depths (PaLD) probabilities, implementing clustering
+analyses, and creating data visualizations to display community
+structure. We describe how to use the package as well as walk through
+several examples.
 }
 
 \hypertarget{introduction}{%
@@ -64,7 +70,7 @@ inputs.
 We present a new package, \CRANpkg{pald}, for calculating Partitioned
 Local Depths (PaLD) probabilities, implementing clustering analyses, and
 creating data visualizations to display community structure. This paper
-will describe how to use the package as well as walk through two
+will describe how to use the package as well as walk through several
 examples.
 
 \hypertarget{pald}{%
@@ -289,9 +295,9 @@ graphs <- community_graphs(cohesion)
 graphs[["G_strong"]]
 \end{Sinput}
 \begin{Soutput}
-#> IGRAPH 62fc4b4 UNW- 6 3 -- 
+#> IGRAPH 8cc278d UNW- 6 3 -- 
 #> + attr: name (v/c), weight (e/n)
-#> + edges from 62fc4b4 (vertex names):
+#> + edges from 8cc278d (vertex names):
 #> [1] A--B A--E D--F
 \end{Soutput}
 \end{Schunk}
@@ -555,7 +561,7 @@ french_neighbors <- igraph::neighbors(cognate_graph_strong, "French")
 french_neighbors
 \end{Sinput}
 \begin{Soutput}
-#> + 8/87 vertices, named, from 8ad41e8:
+#> + 8/87 vertices, named, from 7044f2e:
 #> [1] Italian         Ladin           Provencal       Walloon        
 #> [5] French_Creole_C French_Creole_D Spanish         Catalan
 \end{Soutput}

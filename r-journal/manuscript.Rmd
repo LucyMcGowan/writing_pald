@@ -20,7 +20,7 @@ author:
     - 27106
     email: berenhks@wfu.edu 
 abstract: >
-  An abstract of less than 150 words.
+  Partitioned Local Depths (PaLD) is a framework for a holistic consideration of the community structure of distance-based data. This paper describes an R package, \CRANpkg{pald}, for calculating Partitioned Local Depths (PaLD) probabilities, implementing clustering analyses, and creating data visualizations to display community structure. We describe how to use the package as well as walk through several examples. 
 output:
   rticles::rjournal_article:
     includes:
@@ -42,7 +42,7 @@ As cohesion captures a sense of the relationship strength between points, we can
 
 As seen throughout this paper, we display the network obtained from cohesion using a force-directed graph drawing algorithm and emphasize the strong ties (colored by connected component).  We refer to the connected components of the network of strong ties as community "clusters."  Note that to qualify as a cluster in this definition, one may not have any strong ties with those outside the cluster, and thus the existence of disjoint groups is a strong signal for separation.  Here, clusters are identified without additional user inputs nor optimization criteria.  If one wishes to further break the community graph into groups, one may use community detection methods for networks (such as spectral clustering or the Louvain algorithm).  Though only briefly considered here, one may also use the collection of strong ties in place of (weighted) k-nearest neighbors in settings such as classification and smoothing.  Overall, the structural information obtained from local depth, cohesion and community graphs can provide a holistic perspective on the data which does not require the use of distributional assumptions, optimization criteria nor additional user inputs.
 
-We present a new package, \CRANpkg{pald}, for calculating Partitioned Local Depths (PaLD) probabilities, implementing clustering analyses, and creating data visualizations to display community structure. This paper will describe how to use the package as well as walk through two examples.
+We present a new package, \CRANpkg{pald}, for calculating Partitioned Local Depths (PaLD) probabilities, implementing clustering analyses, and creating data visualizations to display community structure. This paper will describe how to use the package as well as walk through several examples.
 
 ## pald
 
