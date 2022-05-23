@@ -46,7 +46,7 @@ We present a new package, \CRANpkg{pald}, for calculating Partitioned Local Dept
 
 ## pald
 
-The main functions in \CRANpkg{pald} package can be split into 3 categories:
+The main functions in the \CRANpkg{pald} package can be split into 3 categories:
 
 1. A function for computing the cohesion matrix
 2. Functions for extracting useful information from the cohesion matrix, such as local depths, neighbors, clusters, and graph objects
