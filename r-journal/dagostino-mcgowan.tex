@@ -98,8 +98,11 @@ synthetic data set of two-dimensional points created by
 clustering data generated from the scikit-learn Python package
 \citep{pedregosa2011scikit}, data describing cognate relationships
 between words across 87 Indo-European languages \citep{dyen92}, data
-compiled by \cite{tissue} of tissue gene expressions, and three example
-data sets generated for the \citet{berenhaut2022social} paper.
+compiled by \cite{tissue} of tissue gene expressions, data from the
+World Values Survey \citep{inglehart2014world} on cultural values
+regarding family, religion, education, and institutions for several
+regions \citep{muthukrishna2020beyond}, and three example data sets
+generated for the \citet{berenhaut2022social} paper.
 
 While it is not a necessity, the \CRANpkg{pald} package is designed to
 function well with the pipe operator, \texttt{\textbar{}\textgreater{}}.
@@ -300,9 +303,9 @@ graphs <- community_graphs(cohesion)
 graphs[["G_strong"]]
 \end{Sinput}
 \begin{Soutput}
-#> IGRAPH b2835f9 UNW- 6 3 -- 
+#> IGRAPH 4190215 UNW- 6 3 -- 
 #> + attr: name (v/c), weight (e/n)
-#> + edges from b2835f9 (vertex names):
+#> + edges from 4190215 (vertex names):
 #> [1] A--B A--E D--F
 \end{Soutput}
 \end{Schunk}
@@ -574,7 +577,7 @@ french_neighbors <- igraph::neighbors(cognate_graph_strong, "French")
 french_neighbors
 \end{Sinput}
 \begin{Soutput}
-#> + 8/87 vertices, named, from e40f165:
+#> + 8/87 vertices, named, from 4db266d:
 #> [1] Italian         Ladin           Provencal       Walloon        
 #> [5] French_Creole_C French_Creole_D Spanish         Catalan
 \end{Soutput}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.6)  2 JUN 2022 17:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.6)  2 JUN 2022 17:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -691,33 +691,33 @@ Package hyperref Warning: Difference (2) between bookmark levels is greater
 [1{/Users/lucymcgowan/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ]
-LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 105.
+LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 108.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4.fd
 File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
 )
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 9.18004pt on input line 105.
+(Font)              scaled to size 9.18004pt on input line 108.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zi4' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 149.
+LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 152.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
-LaTeX Font Info:    Trying to load font information for OML+zplm on input line 149.
+LaTeX Font Info:    Trying to load font information for OML+zplm on input line 152.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
-LaTeX Font Info:    Trying to load font information for OMS+zplm on input line 149.
+LaTeX Font Info:    Trying to load font information for OMS+zplm on input line 152.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
-LaTeX Font Info:    Trying to load font information for OMX+zplm on input line 149.
+LaTeX Font Info:    Trying to load font information for OMX+zplm on input line 152.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
-LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 149.
+LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 152.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
@@ -726,79 +726,79 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 149.
+(Font)              scaled to size 9.37807pt on input line 152.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 149.
+(Font)              scaled to size 7.29405pt on input line 152.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 149.
+(Font)              scaled to size 5.21004pt on input line 152.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 149.
+(Font)              scaled to size 9.37807pt on input line 152.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 149.
+(Font)              scaled to size 7.29405pt on input line 152.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 149.
+(Font)              scaled to size 5.21004pt on input line 152.
 [2]
-LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 285.
+LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 288.
 (/Users/lucymcgowan/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 ) [3]
-<dagostino-mcgowan_files/figure-latex/fig1-1.pdf, id=96, 469.755pt x 289.08pt>
+<dagostino-mcgowan_files/figure-latex/fig1-1.pdf, id=102, 469.755pt x 289.08pt>
 File: dagostino-mcgowan_files/figure-latex/fig1-1.pdf Graphic file (type pdf)
 <use dagostino-mcgowan_files/figure-latex/fig1-1.pdf>
-Package pdftex.def Info: dagostino-mcgowan_files/figure-latex/fig1-1.pdf  used on input line 376.
+Package pdftex.def Info: dagostino-mcgowan_files/figure-latex/fig1-1.pdf  used on input line 379.
 (pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 
-Overfull \hbox (71.41528pt too wide) in paragraph at lines 376--376
+Overfull \hbox (71.41528pt too wide) in paragraph at lines 379--379
 [][] 
  []
 
-<dagostino-mcgowan_files/figure-latex/fig2-1.pdf, id=100, 469.755pt x 289.08pt>
+<dagostino-mcgowan_files/figure-latex/fig2-1.pdf, id=106, 469.755pt x 289.08pt>
 File: dagostino-mcgowan_files/figure-latex/fig2-1.pdf Graphic file (type pdf)
 <use dagostino-mcgowan_files/figure-latex/fig2-1.pdf>
-Package pdftex.def Info: dagostino-mcgowan_files/figure-latex/fig2-1.pdf  used on input line 394.
+Package pdftex.def Info: dagostino-mcgowan_files/figure-latex/fig2-1.pdf  used on input line 397.
 (pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 
-Overfull \hbox (71.41528pt too wide) in paragraph at lines 394--394
+Overfull \hbox (71.41528pt too wide) in paragraph at lines 397--397
 [][] 
  []
 
 [4] [5 <./dagostino-mcgowan_files/figure-latex/fig1-1.pdf> <./dagostino-mcgowan_files/figure-latex/fig2-1.pdf>]
-<dagostino-mcgowan_files/figure-latex/fig3-1.pdf, id=125, 469.755pt x 289.08pt>
+<dagostino-mcgowan_files/figure-latex/fig3-1.pdf, id=131, 469.755pt x 289.08pt>
 File: dagostino-mcgowan_files/figure-latex/fig3-1.pdf Graphic file (type pdf)
 <use dagostino-mcgowan_files/figure-latex/fig3-1.pdf>
-Package pdftex.def Info: dagostino-mcgowan_files/figure-latex/fig3-1.pdf  used on input line 430.
+Package pdftex.def Info: dagostino-mcgowan_files/figure-latex/fig3-1.pdf  used on input line 433.
 (pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 
-Overfull \hbox (71.41528pt too wide) in paragraph at lines 430--430
+Overfull \hbox (71.41528pt too wide) in paragraph at lines 433--433
 [][] 
  []
 
 [6 <./dagostino-mcgowan_files/figure-latex/fig3-1.pdf>]
-<fig5.png, id=156, 3011.25pt x 3011.25pt>
+<fig5.png, id=162, 3011.25pt x 3011.25pt>
 File: fig5.png Graphic file (type png)
 <use fig5.png>
-Package pdftex.def Info: fig5.png  used on input line 533.
+Package pdftex.def Info: fig5.png  used on input line 536.
 (pdftex.def)             Requested size: 398.33858pt x 398.32248pt.
 [7] [8 <./fig5.png>]
-<fig6.png, id=177, 3011.25pt x 3011.25pt>
+<fig6.png, id=183, 3011.25pt x 3011.25pt>
 File: fig6.png Graphic file (type png)
 <use fig6.png>
-Package pdftex.def Info: fig6.png  used on input line 619.
+Package pdftex.def Info: fig6.png  used on input line 622.
 (pdftex.def)             Requested size: 398.33858pt x 398.32248pt.
 [9] [10 <./fig6.png>]
-<dagostino-mcgowan_files/figure-latex/fig5-1.pdf, id=201, 469.755pt x 289.08pt>
+<dagostino-mcgowan_files/figure-latex/fig5-1.pdf, id=207, 469.755pt x 289.08pt>
 File: dagostino-mcgowan_files/figure-latex/fig5-1.pdf Graphic file (type pdf)
 <use dagostino-mcgowan_files/figure-latex/fig5-1.pdf>
-Package pdftex.def Info: dagostino-mcgowan_files/figure-latex/fig5-1.pdf  used on input line 706.
+Package pdftex.def Info: dagostino-mcgowan_files/figure-latex/fig5-1.pdf  used on input line 709.
 (pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
 
-Overfull \hbox (71.41528pt too wide) in paragraph at lines 706--706
+Overfull \hbox (71.41528pt too wide) in paragraph at lines 709--709
 [][] 
  []
 
@@ -809,10 +809,10 @@ Overfull \hbox (71.41528pt too wide) in paragraph at lines 706--706
 )
 
 LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
-(Font)              using `T1/zi4/m/n' instead on input line 736.
+(Font)              using `T1/zi4/m/n' instead on input line 739.
 
 LaTeX Font Info:    Font shape `T1/zi4/m/it' will be
-(Font)              scaled to size 9.18004pt on input line 746.
+(Font)              scaled to size 9.18004pt on input line 749.
 ) [12] (./RJwrapper.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -820,21 +820,21 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Package rerunfilecheck Info: File `RJwrapper.out' has not changed.
 (rerunfilecheck)             Checksum: E8837F75218409D72AAD133E2C5E9A2B;1183.
 Package rerunfilecheck Info: File `RJwrapper.brf' has not changed.
-(rerunfilecheck)             Checksum: CCE57A26E9FA96F8B4190B9B912D1ED2;1093.
+(rerunfilecheck)             Checksum: 43EEF37A6CEDD4DE50C11B98DA3DCC1E;1199.
  ) 
 Here is how much of TeX's memory you used:
- 26493 strings out of 480260
- 490703 string characters out of 5893177
- 780856 words of memory out of 5000000
- 43612 multiletter control sequences out of 15000+600000
- 506515 words of font info for 243 fonts, out of 8000000 for 9000
+ 26510 strings out of 480260
+ 491089 string characters out of 5893177
+ 781102 words of memory out of 5000000
+ 43624 multiletter control sequences out of 15000+600000
+ 506674 words of font info for 245 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  115i,11n,131p,1006b,706s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}{/Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}</Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on RJwrapper.pdf (12 pages, 6380628 bytes).
+Output written on RJwrapper.pdf (12 pages, 6381981 bytes).
 PDF statistics:
- 287 PDF objects out of 1000 (max. 8388607)
- 244 compressed objects within 3 object streams
- 49 named destinations out of 1000 (max. 500000)
+ 295 PDF objects out of 1000 (max. 8388607)
+ 252 compressed objects within 3 object streams
+ 51 named destinations out of 1000 (max. 500000)
  53347 words of extra memory for PDF output out of 61914 (max. 10000000)
 
