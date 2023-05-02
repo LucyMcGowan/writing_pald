@@ -1,5 +1,5 @@
 % !TeX root = RJwrapper.tex
-\title{Partitioned Local Depth (PaLD) Community Cluster Analyses in R}
+\title{Partitioned Local Depth (PaLD) Community Analyses in R}
 \author{by Lucy D'Agostino McGowan, Katherine Moore, and Kenneth Berenhaut}
 
 \maketitle
@@ -9,9 +9,9 @@ Partitioned Local Depth (PaLD) is a framework for a holistic
 consideration of the community structure of distance-based data. This
 paper describes an R package, \CRANpkg{pald}, for calculating
 Partitioned Local Depth (PaLD) probabilities, implementing community
-clustering analyses, and creating data visualizations to display
-community structure. We describe how to use the package as well as walk
-through several examples.
+analyses, and creating data visualizations to display community
+structure. We describe how to use the package as well as walk through
+several examples.
 }
 
 \hypertarget{introduction}{%
@@ -68,10 +68,10 @@ on the data which does not require the use of distributional
 assumptions, optimization criteria nor additional user inputs.
 
 We present a new package, \CRANpkg{pald}, for calculating Partitioned
-Local Depth (PaLD) probabilities, implementing community clustering
-analyses, and creating data visualizations to display community
-structure. This paper will describe how to use the package as well as
-walk through several examples.
+Local Depth (PaLD) probabilities, implementing community analyses, and
+creating data visualizations to display community structure. This paper
+will describe how to use the package, walk through several examples, and
+compare the method to commonly used clustering algorithms.
 
 \hypertarget{pald}{%
 \subsection{pald}\label{pald}}
@@ -149,7 +149,7 @@ d <- dist(df)
 \end{Schunk}
 
 The function above creates a \texttt{dist} object. If converted to a
-matrix, this will be a \(n\times n\) distance matrix, where \(n\)
+matrix, this will be an \(n\times n\) distance matrix, where \(n\)
 corresponds to the number of observations in the original data frame, in
 this example \(n = 6\).
 
@@ -303,9 +303,9 @@ graphs <- community_graphs(cohesion)
 graphs[["G_strong"]]
 \end{Sinput}
 \begin{Soutput}
-#> IGRAPH 4190215 UNW- 6 3 -- 
+#> IGRAPH aa6899c UNW- 6 3 -- 
 #> + attr: name (v/c), weight (e/n)
-#> + edges from 4190215 (vertex names):
+#> + edges from aa6899c (vertex names):
 #> [1] A--B A--E D--F
 \end{Soutput}
 \end{Schunk}
@@ -360,7 +360,7 @@ and \texttt{F} fall into cluster 3.
 The final category of function is that for data visualization. We can
 begin by visualizing the points in the data frame \texttt{df} (Figure
 \ref{fig:fig1}). When visualizing these points, it is important to have
-the aspect ratio of the x and y axes equal to 1 so as to not distort the
+the aspect ratio of the x and y axes equal to 1 so as to not distort
 distances. When using the \CRANpkg{ggplot2} package for this
 visualization, one can use the \texttt{coord\_fixed(ratio\ =\ 1)}
 function. If using the \texttt{plot()} function included in the base
@@ -386,8 +386,8 @@ between points (Figure \ref{fig:fig2}). Notice in this plot the layout
 does not match that of the original data frame as seen in Figure
 \ref{fig:fig1}. Since our original data is two dimensional, it may be
 reasonable to use this as the layout. Figure \ref{fig:fig3} will make
-this update as well as update some of the aesthetics, such as making the
-labels more readable.
+this update as well as update some of the aesthetics, such as employing
+more readable labels.
 
 \begin{Schunk}
 \begin{Sinput}
@@ -438,7 +438,7 @@ plot_community_graphs(cohesion,
 \subsection{Examples}\label{examples}}
 
 We will demonstrate the utility of the \CRANpkg{pald} package in three
-clustering examples.
+illustrative examples.
 
 \hypertarget{clustering-tissue-gene-expression-data}{%
 \subsubsection{Clustering tissue gene expression
@@ -466,8 +466,8 @@ tissue_cohesion <- cohesion_matrix(tissue_dist)
 
 The \texttt{community\_clusters()} function can be used to identify the
 community cluster corresponding to each tissue sample. Since the output
-is a data frame, we can summarize the clusters using commonly used data
-analysis techniques. For demonstration purposes, we will use the
+is a data frame, we can summarize the result using commonly employed
+data analysis techniques. For demonstration purposes, we will use the
 \CRANpkg{dplyr} package to summarize the contribution of clusters.
 
 \begin{Schunk}
@@ -577,7 +577,7 @@ french_neighbors <- igraph::neighbors(cognate_graph_strong, "French")
 french_neighbors
 \end{Sinput}
 \begin{Soutput}
-#> + 8/87 vertices, named, from 4db266d:
+#> + 8/87 vertices, named, from 7ab7e40:
 #> [1] Italian         Ladin           Provencal       Walloon        
 #> [5] French_Creole_C French_Creole_D Spanish         Catalan
 \end{Soutput}
@@ -623,9 +623,9 @@ plot_community_graphs(
 \end{figure}
 \end{Schunk}
 
-\hypertarget{clustering-generated-data}{%
-\subsubsection{Clustering generated
-data}\label{clustering-generated-data}}
+\hypertarget{community-analysis-for-generated-data}{%
+\subsubsection{Community analysis for generated
+data}\label{community-analysis-for-generated-data}}
 
 The \CRANpkg{pald} package includes three randomly generated data frames
 corresponding to plots from \citet{berenhaut2022social}:
@@ -645,7 +645,7 @@ corresponding to plots from \citet{berenhaut2022social}:
 
 Here, we will demonstrate how to use \texttt{exdata3}. These points were
 generated from bivariate normal distributions with varying means and
-variances. There are eight ``true'' clusters.
+variances. There are eight ``true'' communities.
 
 We will demonstrate how we can compare PaLD to two clustering methods:
 \emph{k}-means and hierarchical clustering. The code below calculates
@@ -716,14 +716,18 @@ PaLD algorithm is able to detect the eight natural groups within the
 data without the use of any additional inputs (e.g., number of clusters)
 nor optimization criteria. Despite the user input of the ``correct''
 number of clusters (i.e., \(k = 8\)) both \emph{k}-means and
-hierarchical clustering did not give the desired result.
+hierarchical clustering did not give the desired result. For further
+examples, discussion, and theoretical results, see
+\citet{berenhaut2022social}.
 
 \hypertarget{summary}{%
 \subsection{Summary}\label{summary}}
 
 This paper introduces the \CRANpkg{pald} package, demonstrating its
 utility for providing parameter-free clustering which can easily be
-implemented for a variety of data sets.
+implemented for a variety of data sets. We provide example code as well
+as compare the method to commonly used clustering techniques,
+\emph{k}-means and hierarchical clustering.
 
 \bibliography{RJreferences}
 

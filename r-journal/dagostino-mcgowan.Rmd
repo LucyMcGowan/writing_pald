@@ -1,5 +1,5 @@
 ---
-title: "Partitioned Local Depth (PaLD) Community Cluster Analyses in R"
+title: "Partitioned Local Depth (PaLD) Community Analyses in R"
 author:
   - name: Lucy D'Agostino McGowan
     affiliation: Wake Forest University
@@ -20,7 +20,7 @@ author:
     - 27106
     email: berenhks@wfu.edu 
 abstract: >
-  Partitioned Local Depth (PaLD) is a framework for a holistic consideration of the community structure of distance-based data. This paper describes an R package, \CRANpkg{pald}, for calculating Partitioned Local Depth (PaLD) probabilities, implementing community clustering analyses, and creating data visualizations to display community structure. We describe how to use the package as well as walk through several examples. 
+  Partitioned Local Depth (PaLD) is a framework for a holistic consideration of the community structure of distance-based data. This paper describes an R package, \CRANpkg{pald}, for calculating Partitioned Local Depth (PaLD) probabilities, implementing community analyses, and creating data visualizations to display community structure. We describe how to use the package as well as walk through several examples. 
 output: rticles::rjournal_article
 ---
 
@@ -39,7 +39,7 @@ As cohesion captures a sense of the relationship strength between points, we can
 
 Throughout this paper, we will display the network obtained from cohesion using a force-directed graph drawing algorithm and emphasize the strong ties (colored by connected component).  We refer to the connected components of the network of strong ties as community "clusters."  Note that to qualify as a cluster in this definition, one may not have any strong ties with those outside the cluster, and thus the existence of disjoint groups is a strong signal for separation.  Here, clusters are identified without additional user inputs nor optimization criteria.  If one wishes to further break the community graph into groups, one may consider using community detection methods (such as  spectral clustering or the Louvain algorithm), as available, say, in the \CRANpkg{igraph} package.  Though only briefly considered here, one may also use the collection of strong ties in place of (weighted) k-nearest neighbors in settings such as classification and smoothing.  Overall, the structural information obtained from local depth, cohesion and community graphs can provide a holistic perspective on the data which does not require the use of distributional assumptions, optimization criteria nor additional user inputs.
 
-We present a new package, \CRANpkg{pald}, for calculating Partitioned Local Depth (PaLD) probabilities, implementing community clustering analyses, and creating data visualizations to display community structure. This paper will describe how to use the package as well as walk through several examples.
+We present a new package, \CRANpkg{pald}, for calculating Partitioned Local Depth (PaLD) probabilities, implementing community analyses, and creating data visualizations to display community structure. This paper will describe how to use the package, walk through several examples, and compare the method to commonly used techniques in R. Together, these demonstrate both the novelty of the method and utility of the implementation in package described.
 
 ## pald
 
@@ -75,7 +75,7 @@ The `dist()` function converts an input data frame into a distance matrix, as de
 d <- dist(df)
 ```
 
-The function above creates a `dist` object. If converted to a matrix, this will be a $n\times n$ distance matrix, where $n$ corresponds to the number of observations in the original data frame, in this example $n = 6$. 
+The function above creates a `dist` object. If converted to a matrix, this will be an $n\times n$ distance matrix, where $n$ corresponds to the number of observations in the original data frame, in this example $n = 6$. 
 
 This `dist` object, or a distance matrix, can then be passed to the `cohesion_matrix()` function in order to calculate the pairwise cohesion values. 
 
@@ -161,7 +161,7 @@ In this example, three clusters are identified with these six points. Points `A`
 
 ## Plotting functions
 
-The final category of function is that for data visualization. We can begin by visualizing the points in the data frame `df` (Figure \ref{fig:fig1}). When visualizing these points, it is important to have the aspect ratio of the x and y axes equal to 1 so as to not distort the distances. When using the \CRANpkg{ggplot2} package for this visualization, one can use the `coord_fixed(ratio = 1)` function. If using the `plot()` function included in the base library, one can use the `asp = 1` argument.
+The final category of function is that for data visualization. We can begin by visualizing the points in the data frame `df` (Figure \ref{fig:fig1}). When visualizing these points, it is important to have the aspect ratio of the x and y axes equal to 1 so as to not distort distances. When using the \CRANpkg{ggplot2} package for this visualization, one can use the `coord_fixed(ratio = 1)` function. If using the `plot()` function included in the base library, one can use the `asp = 1` argument.
 
 
 ```{r fig1, fig.cap = "Visualization of the points from the data frame `df`", message = FALSE, warning = FALSE}
@@ -173,7 +173,7 @@ ggplot(df, aes(x1, x2)) +
   ylim(c(4, 16))
 ```
 
-We can pass the cohesion matrix to the `plot_community_graphs()` function to view the relationship between points (Figure \ref{fig:fig2}). Notice in this plot the layout does not match that of the original data frame as seen in Figure \ref{fig:fig1}. Since our original data is two dimensional, it may be reasonable to use this as the layout. Figure \ref{fig:fig3} will make this update as well as update some of the aesthetics, such as making the labels more readable.
+We can pass the cohesion matrix to the `plot_community_graphs()` function to view the relationship between points (Figure \ref{fig:fig2}). Notice in this plot the layout does not match that of the original data frame as seen in Figure \ref{fig:fig1}. Since our original data is two dimensional, it may be reasonable to use this as the layout. Figure \ref{fig:fig3} will make this update as well as update some of the aesthetics, such as employing more readable labels.
 
 ```{r fig2, fig.cap = "PaLD graph displaying the relationship between the points in data frame `df`"}
 plot_community_graphs(cohesion)
@@ -197,7 +197,7 @@ plot_community_graphs(cohesion,
 
 ## Examples
 
-We will demonstrate the utility of the \CRANpkg{pald} package in three clustering examples.
+We will demonstrate the utility of the \CRANpkg{pald} package in three illustrative examples.
 
 ### Clustering tissue gene expression data
 
@@ -211,7 +211,7 @@ We can create the cohesion matrix using the `cohesion_matrix` function.
 tissue_cohesion <- cohesion_matrix(tissue_dist)
 ```
 
-The `community_clusters()` function can be used to identify the community cluster corresponding to each tissue sample. Since the output is a data frame, we can summarize the clusters using commonly used data analysis techniques. For demonstration purposes, we will use the \CRANpkg{dplyr} package to summarize the contribution of clusters.
+The `community_clusters()` function can be used to identify the community cluster corresponding to each tissue sample. Since the output is a data frame, we can summarize the result using commonly employed data analysis techniques. For demonstration purposes, we will use the \CRANpkg{dplyr} package to summarize the contribution of clusters.
 
 ```{r}
 community_clusters(tissue_cohesion) |>
@@ -319,7 +319,7 @@ dev.off()
 knitr::include_graphics("fig6.png")
 ```
 
-### Clustering generated data
+### Community analysis for generated data
 
 The \CRANpkg{pald} package includes three randomly generated data frames corresponding to plots from \citet{berenhaut2022social}: 
 
@@ -327,7 +327,7 @@ The \CRANpkg{pald} package includes three randomly generated data frames corresp
 * `exdata2` is a data set consisting of 16 points to recreate Figure 2 in \citet{berenhaut2022social} 
 * `exdata3` is a data set consisting of 240 points to recreate Figure 4D in \citet{berenhaut2022social} 
 
-Here, we will demonstrate how to use `exdata3`. These points were generated from bivariate normal distributions with varying means and variances. There are eight "true" clusters.
+Here, we will demonstrate how to use `exdata3`. These points were generated from bivariate normal distributions with varying means and variances. There are eight "true" communities.
 
 We will demonstrate how we can compare PaLD to two clustering methods: *k*-means and hierarchical clustering. The code below calculates the cohesion matrix (`exdata_cohesion`) as well as the clusters via PaLD (`exdata_pald`), *k*-means (`exdata_kmeans`) and hierarchical clustering using complete linkage (`exdata_hclust`).
 
@@ -380,10 +380,10 @@ plot(
 )
 ```
 
-Cohesion is particularly useful when considering data with varying local density, see discussion in \citet{berenhaut2022social}.  Note that the PaLD algorithm is able to detect the eight natural groups within the data without the use of any additional inputs (e.g., number of clusters) nor optimization criteria.  Despite the user input of the "correct" number of clusters (i.e., $k = 8$) both *k*-means and hierarchical clustering did not give the desired result.  
+Cohesion is particularly useful when considering data with varying local density, see discussion in \citet{berenhaut2022social}.  Note that the PaLD algorithm is able to detect the eight natural groups within the data without the use of any additional inputs (e.g., number of clusters) nor optimization criteria.  Despite the user input of the "correct" number of clusters (i.e., $k = 8$) both *k*-means and hierarchical clustering did not give the desired result. For further examples, discussion, and theoretical results, see \citet{berenhaut2022social}.
 
 ## Summary
 
-This paper introduces the \CRANpkg{pald} package, demonstrating its utility for providing parameter-free clustering which can easily be implemented for a variety of data sets.
+This paper introduces the \CRANpkg{pald} package, demonstrating its utility for providing parameter-free clustering which can easily be implemented for a variety of data sets. We provide example code as well as compare the method to commonly used clustering techniques, *k*-means and hierarchical clustering.
 
 \bibliography{RJreferences}
