@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.4.26)  2 MAY 2023 14:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.4.26)  2 MAY 2023 14:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -806,39 +806,55 @@ Overfull \hbox (71.41528pt too wide) in paragraph at lines 711--711
 [][] 
  []
 
-[11 <./dagostino-mcgowan_files/figure-latex/fig5-1.pdf>] (./RJwrapper.bbl (./RJwrapper.brf)
+[11 <./dagostino-mcgowan_files/figure-latex/fig5-1.pdf>]
+<fig7.png, id=224, 3011.25pt x 3011.25pt>
+File: fig7.png Graphic file (type png)
+<use fig7.png>
+Package pdftex.def Info: fig7.png  used on input line 755.
+(pdftex.def)             Requested size: 398.33858pt x 398.32248pt.
+<dagostino-mcgowan_files/figure-latex/figco-1.pdf, id=227, 469.755pt x 289.08pt>
+File: dagostino-mcgowan_files/figure-latex/figco-1.pdf Graphic file (type pdf)
+<use dagostino-mcgowan_files/figure-latex/figco-1.pdf>
+Package pdftex.def Info: dagostino-mcgowan_files/figure-latex/figco-1.pdf  used on input line 772.
+(pdftex.def)             Requested size: 469.75386pt x 289.07928pt.
+
+Overfull \hbox (71.41528pt too wide) in paragraph at lines 772--772
+[][] 
+ []
+
+[12 <./fig7.png>] (./RJwrapper.bbl (./RJwrapper.brf)
 \tf@brf=\write6
 \openout6 = `RJwrapper.brf'.
 
-)
+[13 <./dagostino-mcgowan_files/figure-latex/figco-1.pdf>])
 
 LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
-(Font)              using `T1/zi4/m/n' instead on input line 745.
+(Font)              using `T1/zi4/m/n' instead on input line 812.
 
 LaTeX Font Info:    Font shape `T1/zi4/m/it' will be
-(Font)              scaled to size 9.18004pt on input line 755.
-) [12] (./RJwrapper.aux)
+(Font)              scaled to size 9.18004pt on input line 822.
+) [14] (./RJwrapper.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `RJwrapper.out' has not changed.
 (rerunfilecheck)             Checksum: 99AEA1421D7297BDAA29E8B041F14CFD;1140.
 Package rerunfilecheck Info: File `RJwrapper.brf' has not changed.
-(rerunfilecheck)             Checksum: ED0B003109068C41730CF18290DD54B7;1262.
+(rerunfilecheck)             Checksum: 5C50474C3E672490CE982539B744FF8D;1328.
  ) 
 Here is how much of TeX's memory you used:
- 26742 strings out of 477961
- 493888 string characters out of 5837660
+ 26766 strings out of 477961
+ 494609 string characters out of 5837660
  1869074 words of memory out of 5000000
- 46167 multiletter control sequences out of 15000+600000
- 549299 words of font info for 243 fonts, out of 8000000 for 9000
+ 46188 multiletter control sequences out of 15000+600000
+ 549080 words of font info for 241 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  117i,11n,131p,1006b,847s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></Users/lucymcgowan/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on RJwrapper.pdf (12 pages, 5894910 bytes).
+Output written on RJwrapper.pdf (14 pages, 9024372 bytes).
 PDF statistics:
- 298 PDF objects out of 1000 (max. 8388607)
- 255 compressed objects within 3 object streams
- 51 named destinations out of 1000 (max. 500000)
- 53347 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 329 PDF objects out of 1000 (max. 8388607)
+ 280 compressed objects within 3 object streams
+ 56 named destinations out of 1000 (max. 500000)
+ 53357 words of extra memory for PDF output out of 61914 (max. 10000000)
 

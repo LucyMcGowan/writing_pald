@@ -305,9 +305,9 @@ graphs <- community_graphs(cohesion)
 graphs[["G_strong"]]
 \end{Sinput}
 \begin{Soutput}
-#> IGRAPH e4c9a8b UNW- 6 3 -- 
+#> IGRAPH 2f2c953 UNW- 6 3 -- 
 #> + attr: name (v/c), weight (e/n)
-#> + edges from e4c9a8b (vertex names):
+#> + edges from 2f2c953 (vertex names):
 #> [1] A--B A--E D--F
 \end{Soutput}
 \end{Schunk}
@@ -579,7 +579,7 @@ french_neighbors <- igraph::neighbors(cognate_graph_strong, "French")
 french_neighbors
 \end{Sinput}
 \begin{Soutput}
-#> + 8/87 vertices, named, from 81f58d9:
+#> + 8/87 vertices, named, from 828fab3:
 #> [1] Italian         Ladin           Provencal       Walloon        
 #> [5] French_Creole_C French_Creole_D Spanish         Catalan
 \end{Soutput}
@@ -713,14 +713,81 @@ plot(
 \end{Schunk}
 
 Cohesion is particularly useful when considering data with varying local
-density, see discussion in \citet{berenhaut2022social}. Note that the
-PaLD algorithm is able to detect the eight natural groups within the
-data without the use of any additional inputs (e.g., number of clusters)
-nor optimization criteria. Despite the user input of the ``correct''
-number of clusters (i.e., \(k = 8\)) both \emph{k}-means and
-hierarchical clustering did not give the desired result. For further
-examples, discussion, and theoretical results, see
-\citet{berenhaut2022social}.
+density; see \citet{berenhaut2022social} for further examples,
+discussion, and theoretical results. Note that the PaLD algorithm is
+able to detect the eight natural groups within the data without the use
+of any additional inputs (e.g., number of clusters) nor optimization
+criteria. Despite the user input of the ``correct'' number of clusters
+(i.e., \(k = 8\)) both \emph{k}-means and hierarchical clustering did
+not give the desired result.
+
+\hypertarget{cultural-and-pyschological-distance-analysis}{%
+\subsubsection{Cultural and Pyschological distance
+analysis}\label{cultural-and-pyschological-distance-analysis}}
+
+\textbf{TODO intro to data here} \citep{muthukrishna2020beyond}
+
+First, we will create the cohesion matrix using the \texttt{cultures}
+data, provided in \CRANpkg{pald}, and proceed to plot the community
+structure.
+
+\begin{Schunk}
+\begin{Sinput}
+cultures_cohesion <- cohesion_matrix(cultures)
+\end{Sinput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Sinput}
+plot_community_graphs(
+  cultures_cohesion,
+  edge_width_factor = 30,
+  emph_strong = 3,
+  vertex.label.cex = 0.7,
+  vertex.size = 3,
+  vertex.label.dist = 1
+)
+\end{Sinput}
+\end{Schunk}
+
+\begin{Schunk}
+\begin{figure}
+\includegraphics[width=1\linewidth]{fig7} \caption[Community structure for cultural distance data]{Community structure for cultural distance data.}\label{fig:figculture}
+\end{figure}
+\end{Schunk}
+
+This example demonstrates key features of the PaLD approach that
+distinguish it from commonly used clustering techniques. In addition to
+viewing the community structure as seen in Figure \ref{fig:figculture},
+we can also visualize a two dimensional plot of cohesion versus distance
+for each of the included distance pairs using the
+\texttt{dist\_cohesion\_plot()} function, as seen below (Figure
+\ref{fig:figco}).
+
+\begin{Schunk}
+\begin{Sinput}
+dist_cohesion_plot(cultures)
+\end{Sinput}
+\begin{figure}
+\includegraphics{dagostino-mcgowan_files/figure-latex/figco-1} \caption[Distance versus cohesion for each TODO The identified communties are shown via the 5 colors -- these map to the same clusters idenfitied in Figure 7]{Distance versus cohesion for each TODO The identified communties are shown via the 5 colors -- these map to the same clusters idenfitied in Figure 7.}\label{fig:figco}
+\end{figure}
+\end{Schunk}
+
+Notice here the magnitude of the distances within each of the identified
+communities varies substantially between regions, yet the cohesion
+remains strong. In other words, focusing particularly on identified
+community consisting of regions in the United States (light purple)
+compared to the community consisting of regions in India (turquoise) the
+strong cohesions are similar (Figure \ref{fig:figculture}), yet the
+distances themselves are markedly different (Figure \ref{fig:figco}). In
+fact, the largest distance between regions in the Unites States is
+smaller than that between any two regions in India (Figure
+\ref{fig:figco}). Classic distance-based clustering techniques tend to
+be unable to maintain this distinction often breaking India into several
+smaller communities. Additionally, currently available techniques
+require specification of parameters, as seen in the previous section.
+For further discussion of the cultural distance data in relation to
+community analysis see \citet{berenhaut2022social}.
 
 \hypertarget{summary}{%
 \subsection{Summary}\label{summary}}

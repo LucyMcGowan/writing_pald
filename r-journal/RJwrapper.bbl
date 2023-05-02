@@ -1,0 +1,59 @@
+\begin{thebibliography}{10}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Berenhaut et~al.(2022)Berenhaut, Moore, and Melvin]{berenhaut2022social}
+K.~S. Berenhaut, K.~E. Moore, and R.~L. Melvin.
+\newblock A social perspective on perceived distances reveals deep community structure.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 119\penalty0 (4), 2022.
+
+\bibitem[Dyen et~al.(1992)Dyen, Kruskal, and Black]{dyen92}
+I.~Dyen, J.~B. Kruskal, and P.~Black.
+\newblock An indoeuropean classification: A lexicostatistical experiment.
+\newblock \emph{Transactions of the American Philosophical Society}, 82\penalty0 (5):\penalty0 iii, 1992.
+\newblock \doi{10.2307/1006517}.
+
+\bibitem[Gionis et~al.()Gionis, Mannila, and Tsaparas]{gionis1clustering}
+A.~Gionis, H.~Mannila, and P.~Tsaparas.
+\newblock Clustering aggregation.
+\newblock \emph{ACM Transactions on Knowledge Discovery from Data}, 1:\penalty0 1--30.
+
+\bibitem[Inglehart et~al.(2014)Inglehart, Haerpfer, Moreno, Welzel, Kizilova, D{\'\i}ez-Medrano, Lagos, Norris, Ponarin, Puranen, et~al.]{inglehart2014world}
+R.~Inglehart, C.~Haerpfer, A.~Moreno, C.~Welzel, K.~Kizilova, J.~D{\'\i}ez-Medrano, M.~Lagos, P.~Norris, E.~Ponarin, B.~Puranen, et~al.
+\newblock World values survey: All rounds--country-pooled datafile 1981-2014. madrid: Jd systems institute, 2014.
+\newblock 2014.
+
+\bibitem[Love and Irizarry(2015)]{tissue}
+M.~Love and R.~Irizarry.
+\newblock \emph{tissuesGeneExpression. Subset of gene expression data}, 2015.
+\newblock URL \url{https://github.com/genomicsclass/tissuesGeneExpression}.
+
+\bibitem[McCall et~al.(2011)McCall, Uppal, Jaffee, Zilliox, and Irizarry]{mccall2011gene}
+M.~N. McCall, K.~Uppal, H.~A. Jaffee, M.~J. Zilliox, and R.~A. Irizarry.
+\newblock The gene expression barcode: leveraging public data repositories to begin cataloging the human and murine transcriptomes.
+\newblock \emph{Nucleic Acids Research}, 39\penalty0 (suppl\_1):\penalty0 D1011--D1015, 2011.
+
+\bibitem[McCall et~al.(2014)McCall, Jaffee, Zelisko, Sinha, Hooiveld, Irizarry, and Zilliox]{mccall2014gene}
+M.~N. McCall, H.~A. Jaffee, S.~J. Zelisko, N.~Sinha, G.~Hooiveld, R.~A. Irizarry, and M.~J. Zilliox.
+\newblock The gene expression barcode 3.0: improved data processing and mining tools.
+\newblock \emph{Nucleic Acids Research}, 42\penalty0 (D1):\penalty0 D938--D943, 2014.
+
+\bibitem[Muthukrishna et~al.(2020)Muthukrishna, Bell, Henrich, Curtin, Gedranovich, McInerney, and Thue]{muthukrishna2020beyond}
+M.~Muthukrishna, A.~V. Bell, J.~Henrich, C.~M. Curtin, A.~Gedranovich, J.~McInerney, and B.~Thue.
+\newblock Beyond western, educated, industrial, rich, and democratic (weird) psychology: Measuring and mapping scales of cultural and psychological distance.
+\newblock \emph{Psychological Science}, 31\penalty0 (6):\penalty0 678--701, 2020.
+
+\bibitem[Pedregosa et~al.(2011)Pedregosa, Varoquaux, Gramfort, Michel, Thirion, Grisel, Blondel, Prettenhofer, Weiss, Dubourg, et~al.]{pedregosa2011scikit}
+F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel, M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, et~al.
+\newblock Scikit-learn: Machine learning in python.
+\newblock \emph{Journal of Machine Learning Research}, 12\penalty0 (Oct):\penalty0 2825--2830, 2011.
+
+\bibitem[Zilliox and Irizarry(2007)]{zilliox2007gene}
+M.~J. Zilliox and R.~A. Irizarry.
+\newblock A gene expression bar code for microarray data.
+\newblock \emph{Nature Methods}, 4\penalty0 (11):\penalty0 911--913, 2007.
+
+\end{thebibliography}

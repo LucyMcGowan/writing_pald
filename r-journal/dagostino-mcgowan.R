@@ -224,3 +224,40 @@ plot(
   asp = 1
 )
 
+
+## -----------------------------------------------------------------------------
+cultures_cohesion <- cohesion_matrix(cultures)
+
+
+## ---- eval = FALSE------------------------------------------------------------
+#> plot_community_graphs(
+#>   cultures_cohesion,
+#>   edge_width_factor = 30,
+#>   emph_strong = 3,
+#>   vertex.label.cex = 0.7,
+#>   vertex.size = 3,
+#>   vertex.label.dist = 1
+#> )
+
+
+## ---- include = FALSE, results = "hide"---------------------------------------
+set.seed(7)
+png("fig7.png", res = 300, height = 3000, width = 3000)
+plot_community_graphs(
+  cultures_cohesion,
+  edge_width_factor = 30,
+  emph_strong = 3,
+  vertex.label.cex = 0.7,
+  vertex.size = 3,
+  vertex.label.dist = 1
+)
+dev.off()
+
+
+## ----figculture, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Community structure for cultural distance data.", out.width = "100%"----
+knitr::include_graphics("fig7.png")
+
+
+## ----figco, fig.cap = "Distance versus cohesion for each TODO The identified communties are shown via the 5 colors -- these map to the same clusters idenfitied in Figure 7."----
+dist_cohesion_plot(cultures)
+
