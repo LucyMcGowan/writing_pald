@@ -305,9 +305,9 @@ graphs <- community_graphs(cohesion)
 graphs[["G_strong"]]
 \end{Sinput}
 \begin{Soutput}
-#> IGRAPH 9daec2b UNW- 6 3 -- 
+#> IGRAPH e4c9a8b UNW- 6 3 -- 
 #> + attr: name (v/c), weight (e/n)
-#> + edges from 9daec2b (vertex names):
+#> + edges from e4c9a8b (vertex names):
 #> [1] A--B A--E D--F
 \end{Soutput}
 \end{Schunk}
@@ -352,9 +352,9 @@ community_clusters(cohesion)
 \end{Schunk}
 
 In this example, three clusters are identified with these six points.
-Points \texttt{A}, \texttt{B}, and \texttt{E} fall into cluster 1. Point
-\texttt{C} is in cluster 2 (a cluster of size 1) and points \texttt{D}
-and \texttt{F} fall into cluster 3.
+Points \texttt{A}, \texttt{B}, and \texttt{E} fall into Cluster 1. Point
+\texttt{C} is in Cluster 2 (a cluster of size 1) and points \texttt{D}
+and \texttt{F} fall into Cluster 3.
 
 \hypertarget{plotting-functions}{%
 \subsection{Plotting functions}\label{plotting-functions}}
@@ -501,7 +501,7 @@ community_clusters(tissue_cohesion) |>
 \end{Soutput}
 \end{Schunk}
 
-From this, we can glean that cluster 1 consists of two types of tissue,
+From this, we can glean that Cluster 1 consists of two types of tissue,
 the kidney and endometrium. Cluster 2 is comprised of only the
 hippocampus.
 
@@ -579,7 +579,7 @@ french_neighbors <- igraph::neighbors(cognate_graph_strong, "French")
 french_neighbors
 \end{Sinput}
 \begin{Soutput}
-#> + 8/87 vertices, named, from 8f39182:
+#> + 8/87 vertices, named, from 81f58d9:
 #> [1] Italian         Ladin           Provencal       Walloon        
 #> [5] French_Creole_C French_Creole_D Spanish         Catalan
 \end{Soutput}

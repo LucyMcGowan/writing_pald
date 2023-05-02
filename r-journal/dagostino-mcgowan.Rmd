@@ -157,7 +157,7 @@ The "community clusters" identified by PaLD are the connected components of the 
 community_clusters(cohesion)
 ```
 
-In this example, three clusters are identified with these six points. Points `A`, `B`, and `E` fall into cluster 1. Point `C` is in cluster 2 (a cluster of size 1) and points `D` and `F` fall into cluster 3.
+In this example, three clusters are identified with these six points. Points `A`, `B`, and `E` fall into Cluster 1. Point `C` is in Cluster 2 (a cluster of size 1) and points `D` and `F` fall into Cluster 3.
 
 ## Plotting functions
 
@@ -218,7 +218,7 @@ community_clusters(tissue_cohesion) |>
   dplyr::count(cluster, point)
 ```
 
-From this, we can glean that cluster 1 consists of two types of tissue, the kidney and endometrium. Cluster 2 is comprised of only the hippocampus. 
+From this, we can glean that Cluster 1 consists of two types of tissue, the kidney and endometrium. Cluster 2 is comprised of only the hippocampus. 
 
 We can also display the relationships between tissue samples using the `plot_community_graphs()` function (Figure \ref{fig:fig4}). For clarity of the display, we show how to remove the labels using `show_labels = FALSE`. We will instead color by the labels by passing these to the `vertex.color` parameter to the `plot.igraph` function (via the `...` argument). Similarly, we can add a legend using the `legend()` function, as you would for an \CRANpkg{igraph} visualization. Additionally, we use the `edge_width_factor` and `emph_strong` arguments to adjust the width of the lines between and within PaLD clusters.
 
