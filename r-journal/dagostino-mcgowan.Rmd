@@ -20,7 +20,7 @@ author:
     - 27106
     email: berenhks@wfu.edu 
 abstract: >
-  Partitioned Local Depth (PaLD) is a framework for a holistic consideration of the community structure of distance-based data. This paper describes an R package, \CRANpkg{pald}, for calculating Partitioned Local Depth (PaLD) probabilities, implementing community analyses, and creating data visualizations to display community structure. We describe how to use the package as well as walk through several examples. 
+  Partitioned Local Depth (PaLD) is a framework for a holistic consideration of the community structure of distance-based data. This paper describes an R package, \CRANpkg{pald}, for calculating Partitioned Local Depth (PaLD) probabilities, implementing community analyses, and creating data visualizations to display community structure. We describe how to use the package, walk through several examples, and contrast the results with commonly used techniques. 
 output: rticles::rjournal_article
 ---
 

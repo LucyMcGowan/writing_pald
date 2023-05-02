@@ -10,8 +10,8 @@ consideration of the community structure of distance-based data. This
 paper describes an R package, \CRANpkg{pald}, for calculating
 Partitioned Local Depth (PaLD) probabilities, implementing community
 analyses, and creating data visualizations to display community
-structure. We describe how to use the package as well as walk through
-several examples.
+structure. We describe how to use the package, walk through several
+examples, and contrast the results with commonly used techniques.
 }
 
 \hypertarget{introduction}{%
@@ -305,9 +305,9 @@ graphs <- community_graphs(cohesion)
 graphs[["G_strong"]]
 \end{Sinput}
 \begin{Soutput}
-#> IGRAPH f9306e2 UNW- 6 3 -- 
+#> IGRAPH 9daec2b UNW- 6 3 -- 
 #> + attr: name (v/c), weight (e/n)
-#> + edges from f9306e2 (vertex names):
+#> + edges from 9daec2b (vertex names):
 #> [1] A--B A--E D--F
 \end{Soutput}
 \end{Schunk}
@@ -579,7 +579,7 @@ french_neighbors <- igraph::neighbors(cognate_graph_strong, "French")
 french_neighbors
 \end{Sinput}
 \begin{Soutput}
-#> + 8/87 vertices, named, from 2660ad9:
+#> + 8/87 vertices, named, from 8f39182:
 #> [1] Italian         Ladin           Provencal       Walloon        
 #> [5] French_Creole_C French_Creole_D Spanish         Catalan
 \end{Soutput}
