@@ -8,11 +8,11 @@ author:
     - 27106
     email:  mcgowald@wfu.edu
   - name: Katherine Moore
-    affiliation: Wake Forest Unversity
+    affiliation: Amherst College
     address:
-    - Winston-Salem, NC
-    - 27106
-    email: mooreke@wfu.edu 
+    - Amherst, MA
+    - 01002
+    email: kmoore@amherst.edu 
   - name: Kenneth Berenhaut 
     affiliation: Wake Forest University
     address:
