@@ -310,9 +310,9 @@ graphs <- community_graphs(cohesion)
 graphs[["G_strong"]]
 \end{Sinput}
 \begin{Soutput}
-#> IGRAPH 198a54e UNW- 6 3 -- 
+#> IGRAPH 90d60fd UNW- 6 3 -- 
 #> + attr: name (v/c), weight (e/n)
-#> + edges from 198a54e (vertex names):
+#> + edges from 90d60fd (vertex names):
 #> [1] A--B A--E D--F
 \end{Soutput}
 \end{Schunk}
@@ -611,7 +611,7 @@ french_neighbors <- igraph::neighbors(cognate_graph_strong, "French")
 french_neighbors
 \end{Sinput}
 \begin{Soutput}
-#> + 8/87 vertices, named, from dc83183:
+#> + 8/87 vertices, named, from aab3808:
 #> [1] Italian         Ladin           Provencal       Walloon        
 #> [5] French_Creole_C French_Creole_D Spanish         Catalan
 \end{Soutput}
@@ -695,7 +695,7 @@ exdata_cohesion <- exdata3 |>
   dist() |>
   cohesion_matrix()
 
-exdata_pald <- community_clusters(exdata_cohesion)$cluster
+exdata_pald <- community_clusters(exdata_cohesion)$community
 
 exdata_kmeans <- kmeans(exdata3, 8)$cluster
 

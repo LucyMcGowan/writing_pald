@@ -346,7 +346,7 @@ exdata_cohesion <- exdata3 |>
   dist() |>
   cohesion_matrix()
 
-exdata_pald <- community_clusters(exdata_cohesion)$cluster
+exdata_pald <- community_clusters(exdata_cohesion)$community
 
 exdata_kmeans <- kmeans(exdata3, 8)$cluster
 
