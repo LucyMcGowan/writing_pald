@@ -1,0 +1,45 @@
+Initial check results: 
+
+SUCCESS: Submission has consistently named tex, bib, and R files
+SUCCESS: File and directory names are compliant.
+SUCCESS: No problematic file found
+NOTE: Motivation letter is not detected, if applicable
+SUCCESS: The article title is properly formatted in title case.
+SUCCESS: All sections are properly formatted in sentence case
+SUCCESS: Abstract comes before the introduction section
+NOTE: A potential list of spelling to check: interpretable, asize, pald, scikit, symmetrized, df, coord, igraph, rescale, xlim, ylim, pty, bioconductor, exdata, kmeans, hclust, cohesions
+SUCCESS: CRAN activities have been detected for package pald
+SUCCESS: All CRAN & Bioconductor packages mentioned are available
+
+SUCCESS: 8 | NOTE: 2 | WARNING: 0 | ERROR: 0
+
+Initial check results: 
+
+SUCCESS: Submission has consistently named tex, bib, and R files
+SUCCESS: File and directory names are compliant.
+SUCCESS: No problematic file found
+NOTE: Motivation letter is not detected, if applicable
+SUCCESS: The article title is properly formatted in title case.
+SUCCESS: All sections are properly formatted in sentence case
+SUCCESS: Abstract comes before the introduction section
+NOTE: A potential list of spelling to check: interpretable, asize, pald, scikit, symmetrized, df, coord, igraph, rescale, xlim, ylim, pty, bioconductor, exdata, kmeans, hclust, cohesions
+SUCCESS: CRAN activities have been detected for package pald
+SUCCESS: All CRAN & Bioconductor packages mentioned are available
+
+SUCCESS: 8 | NOTE: 2 | WARNING: 0 | ERROR: 0
+
+Initial check results: 
+
+SUCCESS: Submission has consistently named tex, bib, and R files
+SUCCESS: File and directory names are compliant.
+SUCCESS: No problematic file found
+SUCCESS: Possible motivation letter found: motivation-letter.pdf
+SUCCESS: The article title is properly formatted in title case.
+SUCCESS: All sections are properly formatted in sentence case
+SUCCESS: Abstract comes before the introduction section
+NOTE: A potential list of spelling to check: interpretable, asize, pald, scikit, symmetrized, df, coord, igraph, rescale, xlim, ylim, pty, bioconductor, exdata, kmeans, hclust, cohesions
+SUCCESS: CRAN activities have been detected for package pald
+SUCCESS: All CRAN & Bioconductor packages mentioned are available
+
+SUCCESS: 9 | NOTE: 1 | WARNING: 0 | ERROR: 0
+
