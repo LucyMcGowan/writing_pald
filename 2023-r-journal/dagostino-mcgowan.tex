@@ -236,7 +236,7 @@ see \citet{berenhaut2022social}).
 local_depths(cohesion)
 \end{Sinput}
 \begin{Soutput}
-#>         A         B         C         D         E         F 
+#>         A         B         C         D         E         F
 #> 0.6833333 0.5366667 0.4633333 0.3666667 0.5200000 0.4300000
 \end{Soutput}
 \end{Schunk}
@@ -310,9 +310,9 @@ graphs <- community_graphs(cohesion)
 graphs[["G_strong"]]
 \end{Sinput}
 \begin{Soutput}
-#> IGRAPH 90d60fd UNW- 6 3 -- 
+#> IGRAPH 5de0378 UNW- 6 3 --
 #> + attr: name (v/c), weight (e/n)
-#> + edges from 90d60fd (vertex names):
+#> + edges from 5de0378 (vertex names):
 #> [1] A--B A--E D--F
 \end{Soutput}
 \end{Schunk}
@@ -378,13 +378,15 @@ argument.
 \begin{Sinput}
 library(ggplot2)
 ggplot(df, aes(x1, x2)) +
-  geom_text(label = rownames(df)) + 
-  coord_fixed(ratio = 1) + 
-  xlim(c(4, 16)) + 
+  geom_text(label = rownames(df)) +
+  coord_fixed(ratio = 1) +
+  xlim(c(4, 16)) +
   ylim(c(4, 16))
 \end{Sinput}
-\begin{figure}
-\includegraphics{dagostino-mcgowan_files/figure-latex/fig1-1} \caption[Visualization of the points from the data frame `df`]{Visualization of the points from the data frame `df`}\label{fig:fig1}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=5in]{dagostino-mcgowan_files/figure-latex/fig1-1} \caption[Visualization of the points from the data frame `df`]{Visualization of the points from the data frame `df`}\label{fig:fig1}
+\end{center}
 \end{figure}
 \end{Schunk}
 
@@ -395,12 +397,12 @@ passed to \texttt{plot.igraph} via the \texttt{...} argument.
 
 \begin{Schunk}
 \begin{Sinput}
-plot_community_graphs(cohesion, 
+plot_community_graphs(cohesion,
                       vertex.label.cex = 2,
                       vertex.label.dist = 0.9)
 \end{Sinput}
-\begin{figure}
-\includegraphics{dagostino-mcgowan_files/figure-latex/fig2-1} \caption[PaLD graph displaying the relationship between the points in data frame `df`]{PaLD graph displaying the relationship between the points in data frame `df`}\label{fig:fig2}
+\begin{figure}[H]
+\includegraphics[width=5in,trim=0in 1in 0in 0.7in,clip]{dagostino-mcgowan_files/figure-latex/fig2-1} \caption[PaLD graph displaying the relationship between the points in data frame `df`]{PaLD graph displaying the relationship between the points in data frame `df`}\label{fig:fig2}
 \end{figure}
 \end{Schunk}
 
@@ -427,7 +429,7 @@ forces the subsequent plot to be square.
 \begin{Sinput}
 par(pty = "s")
 
-plot_community_graphs(cohesion, 
+plot_community_graphs(cohesion,
                       layout = as.matrix(df),
                       vertex.size = 100,
                       vertex.label.color = "white",
@@ -437,8 +439,8 @@ plot_community_graphs(cohesion,
                       xlim = c(4, 16),
                       ylim = c(4, 16))
 \end{Sinput}
-\begin{figure}
-\includegraphics{dagostino-mcgowan_files/figure-latex/fig3-1} \caption[PaLD graph displaying the relationship between the points in data frame `df`, matching the original layout in Figure 1]{PaLD graph displaying the relationship between the points in data frame `df`, matching the original layout in Figure 1}\label{fig:fig3}
+\begin{figure}[H]
+\includegraphics[width=5in,trim=0in 0.6in 0in 0.8in,clip]{dagostino-mcgowan_files/figure-latex/fig3-1} \caption[PaLD graph displaying the relationship between the points in data frame `df`, matching the original layout in Figure 1]{PaLD graph displaying the relationship between the points in data frame `df`, matching the original layout in Figure 1}\label{fig:fig3}
 \end{figure}
 \end{Schunk}
 
@@ -472,54 +474,17 @@ tissue_cohesion <- cohesion_matrix(tissue_dist)
 \end{Sinput}
 \end{Schunk}
 
-The \texttt{community\_clusters} function can be used to identify the
-community corresponding to each tissue sample. Since the output is a
-data frame, we can summarize the result using commonly employed R
-functions. For demonstration purposes, we will use the \CRANpkg{dplyr}
-package to summarize the community contributions.
-
-\begin{Schunk}
-\begin{Sinput}
-community_clusters(tissue_cohesion) |>
-  dplyr::count(community, point)
-\end{Sinput}
-\begin{Soutput}
-#>    community       point  n
-#> 1          1 endometrium 15
-#> 2          1      kidney 39
-#> 3          2 hippocampus 31
-#> 4          3  cerebellum 26
-#> 5          4  cerebellum  1
-#> 6          5       colon 33
-#> 7          6       colon  1
-#> 8          7       liver  7
-#> 9          8  cerebellum  1
-#> 10         9       liver 17
-#> 11        10  cerebellum  2
-#> 12        11       liver  2
-#> 13        12  cerebellum  1
-#> 14        13  cerebellum  4
-#> 15        14  cerebellum  2
-#> 16        15  cerebellum  1
-#> 17        16    placenta  2
-#> 18        17    placenta  1
-#> 19        18    placenta  3
-\end{Soutput}
-\end{Schunk}
-
-From this, we can glean, for instance, that Community 1 consists of two
-types of tissue, the kidney and endometrium, Community 2 is comprised of
-only the hippocampus, etc. More informatively, we can display
-relationships between tissue samples, both locally and globally through
-the \texttt{plot\_community\_graphs} function (Figure \ref{fig:fig4}).
-For clarity of the display, we show how to remove the labels using
-\texttt{show\_labels\ =\ FALSE}. We will instead color according to the
-labels by passing these to the \texttt{vertex.color} argument for the
-\texttt{plot.igraph} function (via the \texttt{...} argument).
-Similarly, we can add a legend using the \texttt{legend()} function, as
-you would for an \CRANpkg{igraph} visualization. Additionally, we use
-the \texttt{edge\_width\_factor} and \texttt{emph\_strong} arguments to
-adjust the width of the lines between and within PaLD communities.
+We can display relationships between tissue samples, both locally and
+globally through the \texttt{plot\_community\_graphs} function (Figure
+\ref{fig:fig4}). For clarity of the display, we show how to remove the
+labels using \texttt{show\_labels\ =\ FALSE}. We will instead color
+according to the labels by passing these to the \texttt{vertex.color}
+argument for the \texttt{plot.igraph} function (via the \texttt{...}
+argument). Similarly, we can add a legend using the \texttt{legend()}
+function, as you would for an \CRANpkg{igraph} visualization.
+Additionally, we use the \texttt{edge\_width\_factor} and
+\texttt{emph\_strong} arguments to adjust the width of the lines between
+and within PaLD communities.
 
 \begin{Schunk}
 \begin{Sinput}
@@ -529,9 +494,9 @@ plot_community_graphs(tissue_cohesion,
                       vertex.size = 4,
                       vertex.color = as.factor(labels),
                       edge_width_factor = 35,
-                      emph_strong = 5) 
-legend("topleft", 
-       legend = unique(as.factor(labels)), 
+                      emph_strong = 5)
+legend("topleft",
+       legend = unique(as.factor(labels)),
        pt.bg = unique(as.factor(labels)),
        col = "black",
        pch = 21)
@@ -539,17 +504,12 @@ legend("topleft",
 \end{Schunk}
 
 \begin{Schunk}
-\begin{figure}
-\includegraphics[width=1\linewidth]{fig5} \caption[Community cluster network for the tissue data]{Community cluster network for the tissue data. The line colors indicate the PaLD communities; the point colors indicate the tissue classification.}\label{fig:fig4}
+\begin{figure}[H]
+\includegraphics[width=5.5in,trim=0in 5in 0in 3in,clip]{fig5} \caption[Community cluster network for the tissue data]{Community cluster network for the tissue data. The line colors indicate the PaLD communities; the point colors indicate the tissue classification.}\label{fig:fig4}
 \end{figure}
 \end{Schunk}
 
-Note that while Community 1 does contain kidney and endometrium tissues,
-the respective sub-communities are well-separated. Of the 357 strong
-inter-community ties within Community 1, only three are between the two
-sub-communities. In fact, these are the only strong ties between
-different tissue types in the community cluster network (of 1064 total);
-a summary of community strong ties can be produced via the following
+A summary of community strong ties can be produced via the following
 code. Note that \texttt{tissue\_graph\_strong} is an \CRANpkg{igraph}
 object corresponding to the graph displayed in Figure \ref{fig:fig4},
 restricted only to strong ties.
@@ -559,24 +519,35 @@ restricted only to strong ties.
 tissue_graphs <- community_graphs(tissue_cohesion)
 tissue_graph_strong <- tissue_graphs[["G_strong"]]
 E <- igraph::get.edgelist(tissue_graph_strong)
-table(apply(E, 1, paste, collapse = ","))
+tissue_strong_ties <- data.frame(
+  strong_ties = apply(E, 1, paste, collapse = ",")
+)
+tissue_strong_ties |>
+  dplyr::count(strong_ties) |>
+  dplyr::arrange(-n)
 \end{Sinput}
 \begin{Soutput}
-#> 
-#>   cerebellum,cerebellum             colon,colon endometrium,endometrium 
-#>                     186                     241                      81 
-#> hippocampus,hippocampus      kidney,endometrium           kidney,kidney 
-#>                     191                       3                     273 
-#>             liver,liver       placenta,placenta 
-#>                      85                       4
+#>               strong_ties   n
+#> 1           kidney,kidney 273
+#> 2             colon,colon 241
+#> 3 hippocampus,hippocampus 191
+#> 4   cerebellum,cerebellum 186
+#> 5             liver,liver  85
+#> 6 endometrium,endometrium  81
+#> 7       placenta,placenta   4
+#> 8      kidney,endometrium   3
 \end{Soutput}
 \end{Schunk}
+
+Note that there are only three strong ties between different tissue
+types (kidney and endometrium) in the community cluster network of 1,064
+strong ties total.
 
 \hypertarget{cognate-based-language-families}{%
 \subsection{Cognate-based Language
 Families}\label{cognate-based-language-families}}
 
-This example explors a data set from \citet{dyen92} that summarizes
+This example explores a data set from \citet{dyen92} that summarizes
 relationships between 87 Indo-European languages from the perspective of
 cognates, coded using 2,655-dimensional binary vectors. A \texttt{dist}
 object was created from this data set and is included in the
@@ -603,7 +574,7 @@ cognate_graph_strong <- cognate_graphs[["G_strong"]]
 We can then use the \texttt{neighbors} function from the
 \CRANpkg{igraph} package to extract the strong neighbors in this graph.
 For example, we can extract all neighbors for the language ``French'',
-via the followign code.
+via the following code.
 
 \begin{Schunk}
 \begin{Sinput}
@@ -611,24 +582,25 @@ french_neighbors <- igraph::neighbors(cognate_graph_strong, "French")
 french_neighbors
 \end{Sinput}
 \begin{Soutput}
-#> + 8/87 vertices, named, from aab3808:
-#> [1] Italian         Ladin           Provencal       Walloon        
+#> + 8/87 vertices, named, from b09505b:
+#> [1] Italian         Ladin           Provencal       Walloon
 #> [5] French_Creole_C French_Creole_D Spanish         Catalan
 \end{Soutput}
 \end{Schunk}
 
-Similarly, we can print the associated neighborhood weights by
+Similarly, we can sort and print the associated neighborhood weights by
 subsetting the cohesion matrix.
 
 \begin{Schunk}
 \begin{Sinput}
-cognate_cohesion["French", french_neighbors]
+cognate_cohesion["French", french_neighbors] |>
+  sort(decreasing = TRUE)
 \end{Sinput}
 \begin{Soutput}
-#>         Italian           Ladin       Provencal         Walloon French_Creole_C 
-#>      0.01997696      0.02094596      0.02871174      0.03258771      0.02406057 
-#> French_Creole_D         Spanish         Catalan 
-#>      0.02406057      0.01679733      0.01859688
+#>         Walloon       Provencal French_Creole_C French_Creole_D           Ladin
+#>      0.03258771      0.02871174      0.02406057      0.02406057      0.02094596
+#>         Italian         Catalan         Spanish
+#>      0.01997696      0.01859688      0.01679733
 \end{Soutput}
 \end{Schunk}
 
@@ -652,8 +624,8 @@ plot_community_graphs(
 \end{Schunk}
 
 \begin{Schunk}
-\begin{figure}
-\includegraphics[width=1\linewidth]{fig6} \caption[Community structure for 87 Indo-European languages, which employs cognate information that was coded via 2,665-dimensional binary vectors]{Community structure for 87 Indo-European languages, which employs cognate information that was coded via 2,665-dimensional binary vectors. Commonly identifiable language clusters arise along with informative inter- and intra-cluster structure. Several ancient languages are centrally located.}\label{fig:figlang}
+\begin{figure}[H]
+\includegraphics[width=5.5in,trim=0in 5in 0in 1in,clip]{fig6} \caption[Community structure for 87 Indo-European languages, which employs cognate information that was coded via 2,665-dimensional binary vectors]{Community structure for 87 Indo-European languages, which employs cognate information that was coded via 2,665-dimensional binary vectors. Commonly identifiable language clusters arise along with informative inter- and intra-cluster structure. Several ancient languages are centrally located.}\label{fig:figlang}
 \end{figure}
 \end{Schunk}
 
@@ -681,13 +653,16 @@ Here, we will demonstrate how to use \texttt{exdata3}. These points were
 generated from bivariate normal distributions with varying means and
 variances. There are eight ``true'' communities.
 
-We will contrast community analysis via PaLD to standard culuster
+We will contrast community analysis via PaLD to standard cluster
 analysis by considering two common clustering methods. The code below
 calculates the cohesion matrix (\texttt{exdata\_cohesion}) as well as
 the community clusters obtained via PaLD (\texttt{exdata\_pald}), along
-with clusters obtained via \emph{k}-means (\texttt{exdata\_kmeans}) and
-hierarchical clustering using complete linkage
-(\texttt{exdata\_hclust}).
+with \(k=8\) clusters obtained via \emph{k}-means
+(\texttt{exdata\_kmeans}) and hierarchical clustering using complete
+linkage (\texttt{exdata\_hclust}). Recall that there is no need to
+determine values for extraneous inputs in the case of PaLD (e.g.~the
+number of clusters, as is necessary to specify for \emph{k}-means and
+hierarchical clustering).
 
 \begin{Schunk}
 \begin{Sinput}
@@ -702,7 +677,7 @@ exdata_kmeans <- kmeans(exdata3, 8)$cluster
 exdata_hclust <- exdata3 |>
   dist() |>
   hclust() |>
-  cutree(k = 8) 
+  cutree(k = 8)
 \end{Sinput}
 \end{Schunk}
 
@@ -739,8 +714,8 @@ plot(
   asp = 1
 )
 \end{Sinput}
-\begin{figure}
-\includegraphics{dagostino-mcgowan_files/figure-latex/fig5-1} \caption[PaLD, k-means, and hierarchical 8-clustering of randomly generated example data (from \citet{berenhaut2022social}]{PaLD, k-means, and hierarchical 8-clustering of randomly generated example data (from \citet{berenhaut2022social}; Figure 4D).}\label{fig:fig5}
+\begin{figure}[H]
+\includegraphics[width=5.5in,trim=0in 1in 0in 0.8in,clip]{dagostino-mcgowan_files/figure-latex/fig5-1} \caption[PaLD, k-means, and hierarchical 8-clustering of randomly generated example data (from \citet{berenhaut2022social}]{PaLD, k-means, and hierarchical 8-clustering of randomly generated example data (from \citet{berenhaut2022social}; Figure 4D).}\label{fig:fig5}
 \end{figure}
 \end{Schunk}
 
@@ -792,8 +767,8 @@ plot_community_graphs(
 \end{Schunk}
 
 \begin{Schunk}
-\begin{figure}
-\includegraphics[width=1\linewidth]{fig7} \caption[Community structure for cultural distance data]{Community structure for cultural distance data.}\label{fig:figculture}
+\begin{figure}[H]
+\includegraphics[width=5.5in,trim=0in 5in 0in 3in,clip]{fig7} \caption[Community structure for cultural distance data]{Community structure for cultural distance data.}\label{fig:figculture}
 \end{figure}
 \end{Schunk}
 
@@ -807,8 +782,8 @@ the \texttt{dist\_cohesion\_plot} function, as seen below (Figure
 \begin{Sinput}
 dist_cohesion_plot(cultures, mutual = TRUE)
 \end{Sinput}
-\begin{figure}
-\includegraphics{dagostino-mcgowan_files/figure-latex/figco-1} \caption{A plot of cohesion versus distance for the data. The identified communities are colored as in Figure \ref{fig:figculture}.}\label{fig:figco}
+\begin{figure}[H]
+\includegraphics[width=5.5in,trim=0in 0.5in 0in 0.5in,clip]{dagostino-mcgowan_files/figure-latex/figco-1} \caption{A plot of cohesion versus distance for the data. The identified communities are colored as in Figure \ref{fig:figculture}.}\label{fig:figco}
 \end{figure}
 \end{Schunk}
 
@@ -829,10 +804,11 @@ the cultural distance data in relation to community analysis see
 \subsection{Summary}\label{summary}}
 
 This paper introduces the \CRANpkg{pald} package, demonstrating its
-utility for providing parameter-free community analysis which can easily
-be implemented for a variety of data sets, supplementing results from
-other methods for clustering, embedding, nearest neighbors, etc. Example
-code is provided advantages over other techniques are highlighted.
+utility for providing novel parameter-free community analysis which can
+easily be implemented for a variety of data sets, supplementing results
+from other methods for clustering, embedding, nearest neighbors, etc.
+Example code is provided along with discussion in the context of other
+commonly used R-based approaches.
 
 \bibliography{RJreferences}
 

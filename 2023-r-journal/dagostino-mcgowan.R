@@ -93,11 +93,6 @@ plot_community_graphs(cohesion,
 tissue_cohesion <- cohesion_matrix(tissue_dist)
 
 
-## -----------------------------------------------------------------------------
-community_clusters(tissue_cohesion) |>
-  dplyr::count(community, point)
-
-
 ## ---- eval = FALSE------------------------------------------------------------
 #> labels <- rownames(tissue_cohesion)
 #> plot_community_graphs(tissue_cohesion,
@@ -140,7 +135,12 @@ knitr::include_graphics("fig5.png")
 tissue_graphs <- community_graphs(tissue_cohesion)
 tissue_graph_strong <- tissue_graphs[["G_strong"]]
 E <- igraph::get.edgelist(tissue_graph_strong)
-table(apply(E, 1, paste, collapse = ","))
+tissue_strong_ties <- data.frame(
+  strong_ties = apply(E, 1, paste, collapse = ",")
+)
+tissue_strong_ties |>
+  dplyr::count(strong_ties) |>
+  dplyr::arrange(-n)
 
 
 ## -----------------------------------------------------------------------------
@@ -156,7 +156,8 @@ french_neighbors
 
 
 ## -----------------------------------------------------------------------------
-cognate_cohesion["French", french_neighbors]
+cognate_cohesion["French", french_neighbors] |>
+  sort(decreasing = TRUE)
 
 
 ## ---- eval = FALSE------------------------------------------------------------

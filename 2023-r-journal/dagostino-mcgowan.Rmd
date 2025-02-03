@@ -213,14 +213,7 @@ We can create the cohesion matrix using the `cohesion_matrix` function.
 tissue_cohesion <- cohesion_matrix(tissue_dist)
 ```
 
-The `community_clusters` function can be used to identify the community corresponding to each tissue sample. Since the output is a data frame, we can summarize the result using commonly employed R functions. For demonstration purposes, we will use the \CRANpkg{dplyr} package to summarize the community contributions.
-
-```{r}
-community_clusters(tissue_cohesion) |>
-  dplyr::count(community, point)
-```
-
-From this, we can glean, for instance, that Community 1 consists of two types of tissue, the kidney and endometrium, Community 2 is comprised of only the hippocampus, etc. More informatively, we can display relationships between tissue samples, both locally and globally through the `plot_community_graphs` function  (Figure \ref{fig:fig4}). For clarity of the display, we show how to remove the labels using `show_labels = FALSE`. We will instead color according to the labels by passing these to the `vertex.color` argument for the `plot.igraph` function (via the `...` argument). Similarly, we can add a legend using the `legend()` function, as you would for an \CRANpkg{igraph} visualization. Additionally, we use the `edge_width_factor` and `emph_strong` arguments to adjust the width of the lines between and within PaLD communities.
+We can display relationships between tissue samples, both locally and globally through the `plot_community_graphs` function  (Figure \ref{fig:fig4}). For clarity of the display, we show how to remove the labels using `show_labels = FALSE`. We will instead color according to the labels by passing these to the `vertex.color` argument for the `plot.igraph` function (via the `...` argument). Similarly, we can add a legend using the `legend()` function, as you would for an \CRANpkg{igraph} visualization. Additionally, we use the `edge_width_factor` and `emph_strong` arguments to adjust the width of the lines between and within PaLD communities.
 
 ```{r, eval = FALSE}
 labels <- rownames(tissue_cohesion)
@@ -261,19 +254,34 @@ dev.off()
 knitr::include_graphics("fig5.png")
 ```
 
-Note that while Community 1 does contain kidney and endometrium tissues, the respective sub-communities are well-separated. Of the 357 strong inter-community ties within Community 1, only three are between the two sub-communities. In fact, these are the only strong ties between different tissue types in the community cluster network (of 1064 total); a summary of community strong ties can be produced via the following code. Note that `tissue_graph_strong` is an \CRANpkg{igraph} object corresponding to the graph displayed in Figure \ref{fig:fig4}, restricted only to strong ties.
+A summary of community strong ties can be produced via the following code. Note that `tissue_graph_strong` is an \CRANpkg{igraph} object corresponding to the graph displayed in Figure \ref{fig:fig4}, restricted only to strong ties.
+
+<!-- The `community_clusters` function can be used to identify the community corresponding to each tissue sample. Since the output is a data frame, we can summarize the result using commonly employed R functions. For demonstration purposes, we will use the \CRANpkg{dplyr} package to summarize the community contributions. -->
+
+<!-- ```{r} -->
+<!-- community_clusters(tissue_cohesion) |> -->
+<!--   dplyr::count(community, point) -->
+<!-- ``` -->
+
+<!-- From this, we can glean, for instance, that Community 1 consists of two types of tissue, the kidney and endometrium, Community 2 is comprised of only the hippocampus, etc. More informatively,  -->
 
 ```{r}
 tissue_graphs <- community_graphs(tissue_cohesion)
 tissue_graph_strong <- tissue_graphs[["G_strong"]]
 E <- igraph::get.edgelist(tissue_graph_strong)
-table(apply(E, 1, paste, collapse = ","))
+tissue_strong_ties <- data.frame(
+  strong_ties = apply(E, 1, paste, collapse = ",")
+)
+tissue_strong_ties |>
+  dplyr::count(strong_ties) |>
+  dplyr::arrange(-n)
 ```
 
+Note that there are only three strong ties between different tissue types (kidney and endometrium) in the community cluster network of 1,064 strong ties total.
 
 ## Cognate-based Language Families 
 
-This example explors a data set from \citet{dyen92} that summarizes relationships between 87 Indo-European languages from the perspective of cognates, coded using 2,655-dimensional binary vectors. A `dist` object was created from this data set and is included in the \CRANpkg{pald} package in an object called `cognate_dist`.
+This example explores a data set from \citet{dyen92} that summarizes relationships between 87 Indo-European languages from the perspective of cognates, coded using 2,655-dimensional binary vectors. A `dist` object was created from this data set and is included in the \CRANpkg{pald} package in an object called `cognate_dist`.
 
 Here we will demonstrate how one can further apply functions in the \CRANpkg{igraph} package to objects output from the \CRANpkg{pald} package. We can first use the `cohesion_matrix` function to calculate the cohesion matrix and the `community_graphs` function to create a list with the weighted community graph, the weighted community graph with only strong ties included, and the layout. From this, we can extract the graph with only the strong ties, here called `cognate_graph_strong`.
 
@@ -284,17 +292,18 @@ cognate_graphs <- community_graphs(cognate_cohesion)
 cognate_graph_strong <- cognate_graphs[["G_strong"]]
 ```
 
-We can then use the `neighbors` function from the \CRANpkg{igraph} package to extract the strong neighbors in this graph. For example, we can extract all neighbors for the language "French", via the followign code.
+We can then use the `neighbors` function from the \CRANpkg{igraph} package to extract the strong neighbors in this graph. For example, we can extract all neighbors for the language "French", via the following code.
 
 ```{r}
 french_neighbors <- igraph::neighbors(cognate_graph_strong, "French")
 french_neighbors
 ```
 
-Similarly, we can print the associated neighborhood weights by subsetting the cohesion matrix.
+Similarly, we can sort and print the associated neighborhood weights by subsetting the cohesion matrix.
 
 ```{r}
-cognate_cohesion["French", french_neighbors]
+cognate_cohesion["French", french_neighbors] |>
+  sort(decreasing = TRUE)
 ```
 
 We can again use the `plot_community_graphs` function to visualize the community clusters (Figure \ref{fig:figlang}). One may note the commonly identifiable language clusters and that, under a slight rotation, some of the underlying geography is mirrored in the plot.
@@ -339,7 +348,7 @@ The \CRANpkg{pald} package includes three randomly generated data frames corresp
 
 Here, we will demonstrate how to use `exdata3`. These points were generated from bivariate normal distributions with varying means and variances. There are eight "true" communities.
 
-We will contrast community analysis via PaLD to standard culuster analysis by considering two common clustering methods. The code below calculates the cohesion matrix (`exdata_cohesion`) as well as the community clusters obtained via PaLD (`exdata_pald`), along with clusters obtained via *k*-means (`exdata_kmeans`) and hierarchical clustering using complete linkage (`exdata_hclust`).
+We will contrast community analysis via PaLD to standard cluster analysis by considering two common clustering methods. The code below calculates the cohesion matrix (`exdata_cohesion`) as well as the community clusters obtained via PaLD (`exdata_pald`), along with $k=8$ clusters obtained via *k*-means (`exdata_kmeans`) and hierarchical clustering using complete linkage (`exdata_hclust`). Recall that there is no need to determine values for extraneous inputs in the case of PaLD (e.g. the number of clusters, as is necessary to specify for *k*-means and hierarchical clustering).
 
 ```{r}
 exdata_cohesion <- exdata3 |>
@@ -443,6 +452,6 @@ Notice here that the magnitude of the distances within each of the identified co
 
 ## Summary
 
-This paper introduces the \CRANpkg{pald} package, demonstrating its utility for providing parameter-free community analysis which can easily be implemented for a variety of data sets, supplementing results from other methods for clustering, embedding, nearest neighbors, etc. Example code is provided advantages over other techniques are highlighted.
+This paper introduces the \CRANpkg{pald} package, demonstrating its utility for providing novel parameter-free community analysis which can easily be implemented for a variety of data sets, supplementing results from other methods for clustering, embedding, nearest neighbors, etc. Example code is provided along with discussion in the context of other commonly used R-based approaches.
 
 \bibliography{RJreferences}
